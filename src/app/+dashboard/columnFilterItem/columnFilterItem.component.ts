@@ -1,10 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { ColumnFilterItemModel } from './shared/columnFilterItemModel';
+import { ColumnFilterItemModel } from '../shared/columnFilterItemModel';
 
 @Component({
     selector: 'columnFilterItem',
-    templateUrl: '/app/+dashboard/columnFilterItem.component.html',
-    styleUrls: ['/app/+dashboard/columnFilterItem.component.css'],
+    templateUrl: '/app/+dashboard/columnFilterItem/columnFilterItem.component.html',
+    styleUrls: ['/app/+dashboard/columnFilterItem/columnFilterItem.component.css'],
 })
 export class ColumnFilterItem implements OnInit {
     @Input("model") item: ColumnFilterItemModel;

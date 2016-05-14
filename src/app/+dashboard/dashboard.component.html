@@ -3,7 +3,7 @@
     <div class="card">
       <div class="card-content blue-grey white-text">
         <p class="card-stats-title"><i class="medium material-icons">healing</i> Systemstatus</p>
-        <h4 class="card-stats-number">Healthy</h4>
+        <h4 class="card-stats-number">{{ systemStatus }}</h4>
         <p class="card-stats-compare"><i class="mdi-hardware-keyboard-arrow-up"></i>  <span class="blue-grey-text text-lighten-5">means ok ;-)</span>
         </p>
       </div>
@@ -13,7 +13,7 @@
     <div class="card">
       <div class="card-content blue-grey white-text">
         <p class="card-stats-title"><i class="medium material-icons">trending_up</i> Systemload</p>
-        <h4 class="card-stats-number">Low</h4>
+        <h4 class="card-stats-number">{{ systemLoad }}</h4>
         <p class="card-stats-compare"><i class="mdi-hardware-keyboard-arrow-up"></i> arround nothing <span class="blue-grey-text text-lighten-5"></span>
         </p>
       </div>
@@ -23,7 +23,7 @@
     <div class="card">
       <div class="card-content blue-grey white-text">
         <p class="card-stats-title"><i class="medium material-icons">youtube_searched_for</i> Scans</p>
-        <h4 class="card-stats-number">22</h4>
+        <h4 class="card-stats-number">{{ scans }}</h4>
         <p class="card-stats-compare"><i class="mdi-hardware-keyboard-arrow-up"></i> 80% <span class="blue-grey-text text-lighten-5">from yesterday</span>
         </p>
       </div>
@@ -33,7 +33,7 @@
     <div class="card">
       <div class="card-content blue-grey white-text">
         <p class="card-stats-title"><i class="medium material-icons">trending_down</i> Failed</p>
-        <h4 class="card-stats-number">0</h4>
+        <h4 class="card-stats-number">{{ errors }}</h4>
         <p class="card-stats-compare"><i class="mdi-hardware-keyboard-arrow-up"></i>  <span class="blue-grey-text text-lighten-5">Thats awesome!</span>
         </p>
       </div>

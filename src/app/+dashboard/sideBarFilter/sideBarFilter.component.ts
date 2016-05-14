@@ -1,12 +1,12 @@
 import { FORM_DIRECTIVES, FormBuilder, ControlGroup } from '@angular/common';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Subject, BehaviorSubject } from 'rxjs';
-import { ColumnFilterItem } from "./columnFilterItem.component";
-import { ColumnFilterItemModel } from './shared/ColumnFilterItemModel';
+import { ColumnFilterItem } from "../columnFilterItem/columnFilterItem.component";
+import { ColumnFilterItemModel } from '../shared/ColumnFilterItemModel';
 @Component({
     selector: 'sideBarFilter',
-    templateUrl: 'app/+dashboard/sideBarFilter.component.html',
-    styleUrls: ['app/+dashboard/sideBarFilter.component.html'],
+    templateUrl: 'app/+dashboard/sideBarFilter/sideBarFilter.component.html',
+    styleUrls: ['app/+dashboard/sideBarFilter/sideBarFilter.component.html'],
     directives: [FORM_DIRECTIVES, ColumnFilterItem]
 })
 export class SideBarFilterComponent implements OnInit {

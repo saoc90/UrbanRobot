@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { Scan } from "./shared/scan";
-import { ScanService } from "./shared/scanService";
+import { Scan } from "../shared/scan";
+import { ScanService } from "../shared/scanService";
 import {DataTable} from 'primeng/primeng';
 import {Column} from 'primeng/primeng';
-import {SideBarFilterComponent} from "./sideBarFilter.component";
+import {SideBarFilterComponent} from "../sideBarFilter/sideBarFilter.component";
 
 
 @Component({
     selector: 'scanList',
-    templateUrl: "/app/+dashboard/scanlist.component.html",
+    templateUrl: "/app/+dashboard/scanlist/scanlist.component.html",
     providers: [ScanService],
     directives: [DataTable, Column, SideBarFilterComponent] 
 })

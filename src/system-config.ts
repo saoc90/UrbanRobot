@@ -3,22 +3,28 @@
  **********************************************************************************************/
 /** Map relative paths to URLs. */
 const map: any = {
-    "materialize-css": "vendor/materialize-css",
-        "materialize": "vendor/angular2-materialize",
-        "angular2-materialize": "vendor/angular2-materialize",
-        'primeng': 'vendor/primeng'
+  "materialize-css": "vendor/materialize-css",
+  "materialize": "vendor/angular2-materialize",
+  "angular2-materialize": "vendor/angular2-materialize",
+  'primeng': 'vendor/primeng',
+  'firebase': 'vendor/firebase/lib/firebase-web.js',
+  'angularfire2': 'vendor/angularfire2'
 };
 
 /** User packages configuration. */
 const packages: any = {
-   "materialize-css": {
-            "main": "dist/js/materialize"
-        },
-        "materialize": {
-            "main": "dist/materialize-directive",
-            "defaultExtension": "js"
-        },
-        'primeng': { defaultExtension: 'js' }
+  "materialize-css": {
+    "main": "dist/js/materialize"
+  },
+  "materialize": {
+    "main": "dist/materialize-directive",
+    "defaultExtension": "js"
+  },
+  'primeng': { defaultExtension: 'js' },
+  angularfire2: {
+    defaultExtension: 'js',
+    main: 'angularfire2.js'
+  }
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////

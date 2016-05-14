@@ -17,7 +17,9 @@ module.exports = function(defaults) {
       'materialize-css/dist/css/*.css',
       'materialize-css/dist/fonts/**/*.*',
       'primeng/**/*.js',
-      'primeui/**/*.*'
+      'primeui/**/*.*',
+      'angularfire2/**/*.js',
+      'firebase/lib/*.js'  
       
     ]
   });
