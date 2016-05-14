@@ -7,5 +7,5 @@ SysVentor SaaS
 
 1. Pull the repo from the server
 2. Install the angularCli and NPM
-3. run ```ng build``` then ```ng server```
+3. run ```ng build``` then ```ng serve```
  
