@@ -1,0 +1,9 @@
+<div  class="switch" >
+   <label> 
+    <input type="checkbox" [disabled]="item.disabled" [(ngModel)]="item.checked" name="{{item.name}}" value="{{item.name}}" (change)="onElementChange($event)"
+    />
+    <span class="lever"></span>
+    
+           {{item.name | uppercase}}
+        </label>
+</div>

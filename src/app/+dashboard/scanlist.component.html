@@ -1,0 +1,15 @@
+<sideBarFilter (columnState)="onFilterChange($event)" [model]="scans" [maxColumnOnGrid]="3">
+</sideBarFilter>
+
+
+<div class="ui-widget-header ui-helper-clearfix" style="padding:4px 10px;border-bottom: 0 none">
+    <i class="fa fa-search" style="float:left;margin:4px 4px 0 0"></i>
+    <input #gb type="text" pInputText size="50" style="float:left" placeholder="Global Filter">
+</div>
+<p-dataTable [value]="scans" [globalFilter]="gb">
+    <div *ngFor="let col of columnState">
+        
+        <p-column *ngIf="col.checked" field="{{col.name}}" header="{{col.name | uppercase}}" sortable="true" [filter]="true" filterMatchMode="contains"></p-column>
+        
+    </div>
+</p-dataTable>

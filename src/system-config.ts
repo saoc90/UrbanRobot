@@ -3,10 +3,22 @@
  **********************************************************************************************/
 /** Map relative paths to URLs. */
 const map: any = {
+    "materialize-css": "vendor/materialize-css",
+        "materialize": "vendor/angular2-materialize",
+        "angular2-materialize": "vendor/angular2-materialize",
+        'primeng': 'vendor/primeng'
 };
 
 /** User packages configuration. */
 const packages: any = {
+   "materialize-css": {
+            "main": "dist/js/materialize"
+        },
+        "materialize": {
+            "main": "dist/materialize-directive",
+            "defaultExtension": "js"
+        },
+        'primeng': { defaultExtension: 'js' }
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -29,6 +41,9 @@ const barrels: string[] = [
   // App specific barrels.
   'app',
   'app/shared',
+  'app/+scan',
+  'app/+setting',
+  'app/+dashboard',
   /** @cli-barrel */
 ];
 

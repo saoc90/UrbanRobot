@@ -1,0 +1,7 @@
+<div class="ui form">
+    <div class="left">
+        <div class="left checkboxes switch" style="margin-right:24px;" *ngFor="let filterItem of columnFilterItemModels; let i = index">
+            <columnFilterItem  [model]="filterItem" (onChanged)="onFilterChange($event)"></columnFilterItem>
+        </div>
+    </div>
+</div>

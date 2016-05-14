@@ -11,7 +11,14 @@ module.exports = function(defaults) {
       'es6-shim/es6-shim.js',
       'reflect-metadata/*.js',
       'rxjs/**/*.js',
-      '@angular/**/*.js'
+      '@angular/**/*.js',
+      'angular2-materialize/dist/*.js',
+      'materialize-css/dist/js/*.js',
+      'materialize-css/dist/css/*.css',
+      'materialize-css/dist/fonts/**/*.*',
+      'primeng/**/*.js',
+      'primeui/**/*.*'
+      
     ]
   });
 };
