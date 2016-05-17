@@ -7,6 +7,7 @@ import {SideBarFilterComponent} from "./sideBarFilter/sideBarFilter.component";
 import { SystemStatus } from './shared/systemStatus'
 import { AngularFire, FirebaseObjectObservable } from "angularfire2";
 import { Observable } from "rxjs";
+import { UserServiceService } from '../shared'
 
 @Component({
   selector: 'sd-home',
@@ -21,7 +22,7 @@ export class DashboardComponent {
   errors: string;
   status: Observable<SystemStatus>;
   
-  constructor(af: AngularFire) {
+  constructor(af: AngularFire,private provider:UserServiceService) {
     this.status = af.database.object("/unternehmen/unternhmen1/systemStatus");
     this.status.subscribe(status => {
       this.systemStatus = status.systemStatus;

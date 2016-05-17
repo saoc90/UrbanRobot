@@ -41,6 +41,9 @@
   </div>
 </div>
 
+<button (click)="provider.login()">Logon</button>
+<button (click)="provider.logout()">Logout</button>
+<h2 *ngIf="provider.isLogedIn()">{{(provider.user | async).password.email }}</h2>
 
 <h1>Registered Devices</h1>
 <scanList></scanList>
