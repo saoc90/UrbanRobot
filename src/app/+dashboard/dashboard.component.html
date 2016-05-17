@@ -4,7 +4,7 @@
       <div class="card-content blue-grey white-text">
         <p class="card-stats-title"><i class="medium material-icons">healing</i> Systemstatus</p>
         <h4 class="card-stats-number">{{ systemStatus }}</h4>
-        <p class="card-stats-compare"><i class="mdi-hardware-keyboard-arrow-up"></i>  <span class="blue-grey-text text-lighten-5">means ok ;-)</span>
+        <p class="card-stats-compare"><i class="mdi-hardware-keyboard-arrow-up"></i> {{userRole}} <span class="blue-grey-text text-lighten-5">means ok ;-)</span>
         </p>
       </div>
     </div>
@@ -44,7 +44,7 @@
 <button (click)="provider.login()">Logon</button>
 <button (click)="provider.logout()">Logout</button>
 <h2 *ngIf="provider.isLogedIn()">{{(provider.user | async).password.email }}</h2>
-<h2 *ngIf="provider.isLogedIn()">{{provider.userRole() | async}}</h2>
+<h2 *ngIf="provider.isLogedIn()">{{provider.userRole | async}}</h2>
 
 <h1>Registered Devices</h1>
 <scanList></scanList>

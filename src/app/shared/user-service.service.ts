@@ -8,7 +8,8 @@ export class UserServiceService {
 
   private logedIn: boolean = false;
   public user:Observable<FirebaseAuthState>;
-  public userInfoRef:FirebaseObjectObservable<any>; 
+  public userInfoRef:FirebaseObjectObservable<any>;
+  public userRole: Observable<string>; 
 
   constructor(private af: AngularFire) {
     this.user = this.af.auth;
@@ -17,7 +18,8 @@ export class UserServiceService {
         if(e){
           if(!this.logedIn){
             console.log(e);
-            this.userInfoRef = this.af.object("/users/" + e.uid);
+            this.userInfoRef = this.af.object("/users/" + e.uid)
+            this.userRole = this.userInfoRef.map( user =>  user.role );
           }
           this.logedIn = true;
         } else {
@@ -38,12 +40,6 @@ export class UserServiceService {
   
   logout(){
     this.af.auth.logout();
-  }
-  
-  userRole(): Observable<any> {
-       console.log(this.userInfoRef);
-      // return  this.userInfoRef.map( user =>  user.role );
-      return Observable.from(['hallo']);
   }
   
   isLogedIn(): boolean {
