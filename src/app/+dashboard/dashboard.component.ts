@@ -32,7 +32,7 @@ export class DashboardComponent {
       this.scans = status.scans;
     });
     
-    provider.userRole.subscribe( u => this.userRole = u );
+    //provider.userRole.subscribe( u => this.userRole = u );
   }
 
 }
