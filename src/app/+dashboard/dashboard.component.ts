@@ -21,6 +21,7 @@ export class DashboardComponent {
   systemLoad: string;
   errors: string;
   status: Observable<SystemStatus>;
+  userRole: string="";
   
   constructor(af: AngularFire, private provider:UserServiceService) {
     this.status = af.database.object("/unternehmen/unternhmen1/systemStatus");
@@ -30,6 +31,8 @@ export class DashboardComponent {
       this.systemLoad = status.systemLoad;
       this.scans = status.scans;
     });
+    
+    provider.userRole.subscribe( u => this.userRole = u );
   }
 
 }
