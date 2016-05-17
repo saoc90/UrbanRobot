@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFire, FirebaseAuthState } from 'angularfire2';
+import { AngularFire, FirebaseAuthState, FirebaseObjectObservable } from 'angularfire2';
 import { Observable } from 'rxjs';
 
 
@@ -8,15 +8,21 @@ export class UserServiceService {
 
   private logedIn: boolean = false;
   public user:Observable<FirebaseAuthState>;
+  public userInfoRef:FirebaseObjectObservable<any>; 
 
   constructor(private af: AngularFire) {
     this.user = this.af.auth;
     this.af.auth.subscribe(e => {
-        console.log(e);
+        
         if(e){
+          if(!this.logedIn){
+            console.log(e);
+            this.userInfoRef = this.af.object("/users/" + e.uid);
+          }
           this.logedIn = true;
         } else {
           this.logedIn = false;
+          this.userInfoRef = null;
         }
     }, error => {
       this.logedIn = false;
@@ -34,7 +40,13 @@ export class UserServiceService {
     this.af.auth.logout();
   }
   
-  public isLogedIn(): boolean {
+  userRole(): Observable<any> {
+       console.log(this.userInfoRef);
+      // return  this.userInfoRef.map( user =>  user.role );
+      return Observable.from(['hallo']);
+  }
+  
+  isLogedIn(): boolean {
     return this.logedIn;
   }
 
