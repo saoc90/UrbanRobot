@@ -22,7 +22,7 @@ export class DashboardComponent {
   errors: string;
   status: Observable<SystemStatus>;
   
-  constructor(af: AngularFire,private provider:UserServiceService) {
+  constructor(af: AngularFire, private provider:UserServiceService) {
     this.status = af.database.object("/unternehmen/unternhmen1/systemStatus");
     this.status.subscribe(status => {
       this.systemStatus = status.systemStatus;
