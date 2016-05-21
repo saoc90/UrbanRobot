@@ -5,7 +5,7 @@ import { SettingComponent } from './+setting';
 import { DashboardComponent } from './+dashboard';
 import {MaterializeDirective} from "angular2-materialize";
 import { LoginComponent } from './+login';
-
+import { UserServiceService } from './shared/user-service.service';
 
 @Component({
   moduleId: module.id,
@@ -13,7 +13,7 @@ import { LoginComponent } from './+login';
   templateUrl: 'urban-robot.component.html',
   styleUrls: ['urban-robot.component.css'],
   directives: [ROUTER_DIRECTIVES, MaterializeDirective],
-  providers: [ROUTER_PROVIDERS]
+  providers: [ROUTER_PROVIDERS, UserServiceService]
 })
 @Routes([
   {path: '/', component: DashboardComponent},
@@ -24,4 +24,7 @@ import { LoginComponent } from './+login';
 ])
 export class UrbanRobotAppComponent {
   title = 'urban-robot works!';
+
+  constructor(private userService: UserServiceService) {
+  }
 }

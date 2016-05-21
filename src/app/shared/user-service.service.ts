@@ -15,7 +15,11 @@ export class UserServiceService {
   constructor(private af: AngularFire) {
     this.user = this.af.auth;
     this.userUid = this.af.auth.map(e => {
+      if(e){
       return e.uid;
+      } else {
+        return null;
+      }
     });
     
     this.af.auth.subscribe(e => {
@@ -33,13 +37,12 @@ export class UserServiceService {
         }
     }, error => {
       this.logedIn = false;
-      console.log(error);
+      //console.log(error);
     })
   }
   
   login(email:string, password:string){
-    
-    var tmp =  this.af.auth.login({email: email, password: password});  
+      this.af.auth.login({email: email, password: password}).catch(error => console.log(error.error || error));
   }
   
   

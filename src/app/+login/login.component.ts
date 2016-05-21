@@ -11,18 +11,25 @@ export class LoginComponent implements OnInit {
   
   private username: string;
   private password: string;
+  private notValid: string;
   
   constructor(private userService :UserServiceService) {}
 
   ngOnInit() {
+
   }
+
 
   doLogin(){
     this.userService.login(this.username, this.password);
-    this.userService.userInfoRef.subscribe(user => {
+    this.userService.userUid.subscribe(user => {
       if(user){
+        this.notValid = null;
         console.log("user is now logged in", user);
+      } else {
+        this.notValid = "Wrong email or password";
       }
-    });
+    }, 
+    error => console.error(error));
   }
 }
