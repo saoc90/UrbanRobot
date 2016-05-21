@@ -34,7 +34,7 @@ export class UserServiceService {
   
   login(email:string, password:string){
     
-    var tmp =  this.af.auth.login({email: 'jwo.nagel@gmail.com', password:'12345678'});  
+    var tmp =  this.af.auth.login({email: email, password: password});  
   }
   
   
