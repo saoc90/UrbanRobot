@@ -9,10 +9,15 @@ export class UserServiceService {
   private logedIn: boolean = false;
   public user:Observable<FirebaseAuthState>;
   public userInfoRef:FirebaseObjectObservable<any>;
-  public userRole: Observable<string>; 
+  public userRole: Observable<string>;
+  public userUid: Observable<string>;
 
   constructor(private af: AngularFire) {
     this.user = this.af.auth;
+    this.userUid = this.af.auth.map(e => {
+      return e.uid;
+    });
+    
     this.af.auth.subscribe(e => {
         
         if(e){
