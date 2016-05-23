@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ScanComponent } from './+scan';
-import { Routes , ROUTER_DIRECTIVES, ROUTER_PROVIDERS} from '@angular/router';
+import { Routes , ROUTER_DIRECTIVES, ROUTER_PROVIDERS, Router, OnActivate} from '@angular/router';
 import { SettingComponent } from './+setting';
 import { DashboardComponent } from './+dashboard';
 import {MaterializeDirective} from "angular2-materialize";
@@ -22,9 +22,15 @@ import { UserServiceService } from './shared/user-service.service';
   {path: '/dashboard', component: DashboardComponent},
   {path: '/login', component: LoginComponent}
 ])
-export class UrbanRobotAppComponent {
+export class UrbanRobotAppComponent implements OnActivate {
   title = 'urban-robot works!';
 
-  constructor(private userService: UserServiceService) {
+  constructor(private userService: UserServiceService, private router: Router) {
+  }
+  
+  routerOnActivate() {
+      if(!this.userService.isLogedIn()){
+        this.router.navigateByUrl("/login");
+      }
   }
 }
