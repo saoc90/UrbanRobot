@@ -13,7 +13,7 @@ export class UserServiceService {
   public userUid: Observable<string>;
   public userCompany: Observable<string>;
   public userEmail: Observable<string>;
-  public isAdmin: boolean = false;
+  public uid: string;
 
   constructor(private af: AngularFire) {
     this.user = this.af.auth;
@@ -30,12 +30,12 @@ export class UserServiceService {
           if(!this.logedIn){
             console.log(e);
             this.userInfoRef = this.af.object("/users/" + e.uid)
-            this.userRole = this.userInfoRef.map( user =>  user.role )
-            this.userCompany = this.userInfoRef.map(user => user.unternehmen)
+            this.userRole = this.userInfoRef.map( user =>  user.role)
+            this.userCompany = this.userInfoRef.map(user => user.company)
             this.userEmail = this.userInfoRef.map(user => user.email);
+            this.uid = e.uid;
           }
           this.logedIn = true;
-          this.isAdmin = true;
         } else {
           this.logedIn = false;
           this.userInfoRef = null;
@@ -47,9 +47,23 @@ export class UserServiceService {
   }
 
   
-login(email:string, password:string){
+login(email: string, password: string){
    this.af.auth.login({email: email, password: password})
    .catch(error => console.log(error.error || error));
+  }
+  
+  createUser(email: string, password: string, company: string, role: string){
+    var authData  = this.af.auth.createUser({email, password});
+    return authData.then(au => {
+      const user = this.af.database.object("/users/" + au.uid);
+      user.set(
+        {
+          email: email,
+          company: company,
+          role: role,
+          uid: au.uid
+        });
+    });
   }
 
   logout(){
