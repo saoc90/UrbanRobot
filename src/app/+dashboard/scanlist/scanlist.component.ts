@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { AsyncPipe } from '@angular/common';
 import { Scan } from "../shared/scan";
-import { ScanService } from "../shared/scanService";
+import { ScanService, Client } from "../shared/scanService";
 import {DataTable} from 'primeng/primeng';
 import {Column} from 'primeng/primeng';
 import {SideBarFilterComponent} from "../sideBarFilter/sideBarFilter.component";
+import { FirebaseListObservable } from 'angularFire2';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -14,7 +17,18 @@ import {SideBarFilterComponent} from "../sideBarFilter/sideBarFilter.component";
 })
 export class ScanListComponent implements OnInit {
     
-    public scans: Array<Scan>;
+    public scans: Client[] = 
+    [
+        {
+            name: "",
+            applications: "",
+            cpu: "",
+            nics: "",
+            printers: "",
+            os: ""
+        }
+    ];
+    
     public columnState:any = [{"name":"name", "checked":true},
                         {"name":"sid", "checked":true}];
     
@@ -24,7 +38,8 @@ export class ScanListComponent implements OnInit {
      }
 
     ngOnInit() { 
-        this.scans = this.scanService.getAllScans();
+        this.scanService.getAllScans("Muster AG").subscribe(a => 
+        this.scans = a);
     }
     
     onFilterChange(value:[any]){
