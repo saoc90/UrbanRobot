@@ -1,5 +1,6 @@
 
-  <div *ngIf="isAdmin" class="inpu-field">
+ <div id=setting>
+  <div *ngIf="isAdmin" class="input-field">
     <h2>Add new User</h2>
      <div class="row">
     <form class="col s12">
@@ -44,4 +45,35 @@
    </button>
     </div>
     </div>
+    </div>
+    <div *ngIf="isAdmin">
+      <h2>Edit Users</h2>
+    <table >
+        <thead>
+          <tr>
+              <th data-field="id">Email</th>
+              <th data-field="name">Userrole</th>
+              <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of userList | async">
+            <td style="padding-top:2px"> 
+              <div class="input-field col s6">
+                <input [(ngModel)]='user.email' id="last_name" type="text" class="validate">
+              </div>
+            </td>
+            <td> 
+              <select [(ngModel)]='user.role' materialize="material_select">
+                <option value="admin">Admin</option>
+                <option value="visitor">Visitor</option>
+                <option value="inventor">Inventor</option>
+              </select>
+            </td>
+            <td (click)="deleteUser(user)">delete</td>
+          </tr>
+          
+        </tbody>
+      </table>
   </div>
+ </div>

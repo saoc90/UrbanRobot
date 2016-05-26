@@ -65,6 +65,10 @@ login(email: string, password: string){
         });
     });
   }
+  
+  removeUser(){
+    //this.af.auth.removeUser();
+  }
 
   logout(){
     this.af.auth.logout();

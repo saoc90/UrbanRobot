@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { OnActivate } from '@angular/router';
 import { UserServiceService } from '../shared/user-service.service'
-import { AngularFire, FirebaseObjectObservable } from 'angularfire2';2
+import { AngularFire, FirebaseObjectObservable, FirebaseListObservable } from 'angularfire2';2
 import { Observable } from "rxjs";
 import {MaterializeDirective} from 'angular2-materialize';
+import { Router, OnActivate } from '@angular/router';
 
 @Component({
   moduleId: module.id,
@@ -12,17 +12,24 @@ import {MaterializeDirective} from 'angular2-materialize';
   templateUrl: 'setting.component.html',
   styleUrls: ['setting.component.css']
 })
-export class SettingComponent implements OnInit {
+export class SettingComponent implements OnInit, OnActivate {
   private error: string = null;
    passwordA: string = "";
    passwordB: string = "";
    email: string = "";
    userRole: string = "";
    isAdmin: boolean = false;
+   userList: Observable<any[]>;
   
-  constructor(private userservice : UserServiceService,private af: AngularFire) {
-    
-  }
+constructor(private userservice: UserServiceService,
+            private af: AngularFire,
+            private router: Router) { }
+
+  routerOnActivate() {
+      if(!this.userservice.isLogedIn()){
+        this.router.navigateByUrl("/login");
+      }
+  } 
 
   ngOnInit() {
     this.af.object("/users/" + this.userservice.uid + "/role")
@@ -33,6 +40,7 @@ export class SettingComponent implements OnInit {
           this.isAdmin =false; 
         }
       });
+      this.getUserList();
   }
 
   createUser(){
@@ -54,8 +62,25 @@ export class SettingComponent implements OnInit {
           this.error = "";
         }).catch(error => this.error = error.message);
     });
-    
-    
   }
+  
+  getUserList(){
+    this.af.object("/users/" + this.userservice.uid + "/company")
+        .subscribe(company => this.getUsersInMyCompany(company));
+  }
+  
+  private getUsersInMyCompany(company: any){
+    this.userList = this.af.list('/users', {
+      query: {
+        orderByChild: 'company',
+        equalTo: company,
+      }
+    });
+  }
+  
+  deleteUser(user){
+    console.log(user);
+  }
+
 
 }
