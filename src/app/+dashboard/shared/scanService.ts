@@ -14,26 +14,27 @@ export class ScanService {
         new Scan(),
         new Scan()
     ];
-    
+
     clientList: FirebaseListObservable<Client[]>;
-    
+
     constructor(private af: AngularFire) { }
     getAllScans(companyId: string): Observable<any> {
-        var id = "Muster AG";
-        this.clientList = this.af.database.list('/unternehmenObj/' + id + '/lastScan');
+        this.clientList = this.af.database.list('/unternehmenObj/' + companyId + '/lastScan');
         var mappedClients = this.clientList.map(
-            clientArray => 
+            clientArray =>
                 clientArray.map(client => {
-                   return {
+                    return {
                         name: client.name,
                         applications: client.applications.app.length,
                         nics: client.nics.nic.length,
-                        printers: client.printers.printer.length
+                        printers: client.printers.printer.length,
+                        os: client.os.name,
+                        cpu: client.cpu.model
                     }
                 })
-            
+
         );
-        
+
         mappedClients.subscribe(value => console.log(value));
         return mappedClients;
     }

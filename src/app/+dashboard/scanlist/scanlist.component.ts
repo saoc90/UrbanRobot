@@ -7,6 +7,8 @@ import {Column} from 'primeng/primeng';
 import {SideBarFilterComponent} from "../sideBarFilter/sideBarFilter.component";
 import { FirebaseListObservable } from 'angularFire2';
 import { Observable } from 'rxjs';
+import { UserServiceService } from './../../shared/user-service.service'; 
+import 'firebase';
 
 
 @Component({
@@ -28,18 +30,32 @@ export class ScanListComponent implements OnInit {
             os: ""
         }
     ];
-    
+
     public columnState:any = [{"name":"name", "checked":true},
-                        {"name":"sid", "checked":true}];
+                        {"name":"applications", "checked":true},
+                        {"name":"nics", "checked":true},
+                        {"name":"printers", "checked":true},
+                        {"name":"os", "checked":true},
+                        {"name":"cpu", "checked":true}
+                        ];
+                        
     
-    constructor(private scanService: ScanService) {
+    constructor(private scanService: ScanService, private userService: UserServiceService) {
         this.columnState = [{"name":"name", "checked":true},
-                        {"name":"sid", "checked":true}];
+                        {"name":"applications", "checked":true},
+                        {"name":"nics", "checked":true},
+                        {"name":"printers", "checked":true},
+                         {"name":"os", "checked":true},
+                          {"name":"cpu", "checked":true}
+                        ];
      }
 
     ngOnInit() { 
-        this.scanService.getAllScans("Muster AG").subscribe(a => 
-        this.scans = a);
+        this.userService.userCompany.subscribe(
+            userCompany =>
+                this.scanService.getAllScans(userCompany).subscribe(a =>
+                    this.scans = a)
+        );
     }
     
     onFilterChange(value:[any]){
