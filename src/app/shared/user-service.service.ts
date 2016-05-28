@@ -3,6 +3,7 @@ import { AngularFire, FirebaseAuthState, FirebaseObjectObservable } from 'angula
 import { Observable } from 'rxjs';
 
 
+
 @Injectable()
 export class UserServiceService {
 
@@ -66,9 +67,20 @@ login(email: string, password: string){
     });
   }
   
-removeUser(){
-
-}
+  removeUser(user){
+    console.log(user);
+    const users = this.af.database.list("/users");
+    var uid: string = user.uid;
+     users.remove(uid)
+     .catch(error => console.log(error.text | error));
+     
+  }
+  updateUser(user){
+     const userToUpdate = this.af.database.object("/users/" + user.uid );
+     userToUpdate.update({
+       role: user.role
+     });
+  }
 
   logout(){
     this.af.auth.logout();
@@ -77,4 +89,5 @@ removeUser(){
   isLogedIn(): boolean {
     return this.logedIn;
   }
+
 }

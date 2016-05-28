@@ -20,7 +20,7 @@
         </div>
         <div class="input-field col s6">
           <input  [(ngModel)]='passwordB' id="password2" type="password" class="validate">
-          <label for="password2">Passwort Wiederholen</label>
+          <label for="password2">Repeat Password</label>
         </div>
       </div>
       <div class="input-field col s12">
@@ -48,11 +48,12 @@
     </div>
     <div *ngIf="isAdmin">
       <h2>Edit Users</h2>
-    <table >
+    <table class="responsive-table">
         <thead>
           <tr>
               <th data-field="id">Email</th>
               <th data-field="name">Userrole</th>
+              <th> password</th>
               <th></th>
               <th></th>
           </tr>
@@ -74,7 +75,14 @@
                 <option value="inventor">Inventor</option>
               </select>
             </td>
-            <td >
+            <td style="padding-top:2px">
+              <div class="input-field col s6">
+                <input type="password" class="validate"
+                        [(ngModel)]='user.password'>
+                <label for="last_name">Set new password</label>
+              </div>
+            </td>
+            <td style="width:20px;">
               <a (click)="SaveUserChanges(user)" 
                 title="Save Changes"
                  class="waves-effect waves-light btn">
@@ -82,10 +90,11 @@
                  
                </a>
             </td>
-            <td>
-              <a (click)="SaveUserChanges(user)" 
+            <td style="width:20px;">
+              <a (click)="deleteUser(user)" 
+                  
                  title="Delete User"
-                 style="background-color:red"
+                 style="background-color:red; "
                  class="waves-effect waves-light btn">
                   <i style="font-size: 25px" class="material-icons ">delete</i>
                  

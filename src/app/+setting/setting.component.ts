@@ -79,10 +79,11 @@ constructor(private userservice: UserServiceService,
   }
 
   deleteUser(user){
-    console.log(user);
+    console.log(user , "In Delete User");
+    this.userservice.removeUser(user);
   }
   
   SaveUserChanges(user){
-    console.log(user);
+    this.userservice.updateUser(user);
   }
 }
