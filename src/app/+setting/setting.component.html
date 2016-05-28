@@ -54,13 +54,17 @@
               <th data-field="id">Email</th>
               <th data-field="name">Userrole</th>
               <th></th>
+              <th></th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let user of userList | async">
             <td style="padding-top:2px"> 
               <div class="input-field col s6">
-                <input [(ngModel)]='user.email' id="last_name" type="text" class="validate">
+                <input [(ngModel)]='user.email' disabled 
+                  style="border-bottom: 1px solid black;
+                         color: black;" 
+                         id="last_name" type="text" class="validate">
               </div>
             </td>
             <td> 
@@ -70,7 +74,23 @@
                 <option value="inventor">Inventor</option>
               </select>
             </td>
-            <td (click)="deleteUser(user)">delete</td>
+            <td >
+              <a (click)="SaveUserChanges(user)" 
+                title="Save Changes"
+                 class="waves-effect waves-light btn">
+                  <i style="font-size: 25px" class="material-icons ">save</i>
+                 
+               </a>
+            </td>
+            <td>
+              <a (click)="SaveUserChanges(user)" 
+                 title="Delete User"
+                 style="background-color:red"
+                 class="waves-effect waves-light btn">
+                  <i style="font-size: 25px" class="material-icons ">delete</i>
+                 
+               </a>
+            </td>
           </tr>
           
         </tbody>

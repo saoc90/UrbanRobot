@@ -77,10 +77,12 @@ constructor(private userservice: UserServiceService,
       }
     });
   }
-  
+
   deleteUser(user){
     console.log(user);
   }
-
-
+  
+  SaveUserChanges(user){
+    console.log(user);
+  }
 }

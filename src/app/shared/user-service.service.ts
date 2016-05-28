@@ -66,16 +66,15 @@ login(email: string, password: string){
     });
   }
   
-  removeUser(){
-    //this.af.auth.removeUser();
-  }
+removeUser(){
+
+}
 
   logout(){
     this.af.auth.logout();
   }
-  
+
   isLogedIn(): boolean {
     return this.logedIn;
   }
-
 }
