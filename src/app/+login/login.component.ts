@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { UserServiceService } from '../shared';
+import { UserServiceService } from '../shared/user-service.service';
+import { Router } from '@angular/router';
 
 @Component({
   moduleId: module.id,
@@ -13,7 +14,7 @@ export class LoginComponent implements OnInit {
   private password: string;
   private notValid: string;
   
-  constructor(private userService :UserServiceService) {}
+  constructor(private userService :UserServiceService, private router: Router) {}
 
   ngOnInit() {
 
@@ -26,6 +27,7 @@ export class LoginComponent implements OnInit {
       if(user){
         this.notValid = null;
         console.log("user is now logged in", user);
+        this.router.navigateByUrl('/dashboard');
       } else {
         this.notValid = "Wrong email or password";
       }

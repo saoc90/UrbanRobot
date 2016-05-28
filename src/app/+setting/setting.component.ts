@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { UserServiceService } from '../shared/user-service.service'
-import { AngularFire, FirebaseObjectObservable, FirebaseListObservable } from 'angularfire2';2
+import { UserServiceService } from '../shared/user-service.service';
+import { AngularFire, FirebaseObjectObservable, FirebaseListObservable } from 'angularfire2';
 import { Observable } from "rxjs";
 import {MaterializeDirective} from 'angular2-materialize';
 import { Router, OnActivate } from '@angular/router';

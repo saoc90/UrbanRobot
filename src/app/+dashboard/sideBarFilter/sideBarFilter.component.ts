@@ -2,7 +2,7 @@ import { FORM_DIRECTIVES, FormBuilder, ControlGroup } from '@angular/common';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Subject, BehaviorSubject } from 'rxjs';
 import { ColumnFilterItem } from "../columnFilterItem/columnFilterItem.component";
-import { ColumnFilterItemModel } from '../shared/ColumnFilterItemModel';
+import { ColumnFilterItemModel } from '../shared/columnFilterItemModel';
 @Component({
     selector: 'sideBarFilter',
     templateUrl: 'app/+dashboard/sideBarFilter/sideBarFilter.component.html',

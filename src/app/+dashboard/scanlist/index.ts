@@ -1,0 +1,1 @@
+export { ScanListComponent } from './scanlist.component';

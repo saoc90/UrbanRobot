@@ -1,0 +1,1 @@
+export { SideBarFilterComponent } from './sideBarFilter.component';

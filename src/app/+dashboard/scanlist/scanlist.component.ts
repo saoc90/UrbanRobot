@@ -1,18 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
-import { Scan } from "../shared/scan";
-import { ScanService, Client } from "../shared/scanService";
-import {DataTable} from 'primeng/primeng';
-import {Column} from 'primeng/primeng';
-import {SideBarFilterComponent} from "../sideBarFilter/sideBarFilter.component";
+import { Scan } from "./../shared/scan";
+import { ScanService } from "./../shared/scanService";
+import { Client } from "./../shared/scanService";
+import { DataTable } from 'primeng/primeng';
+import { Column } from 'primeng/primeng';
+import { SideBarFilterComponent } from "../sideBarFilter/sideBarFilter.component";
 import { FirebaseListObservable } from 'angularFire2';
 import { Observable } from 'rxjs';
-import { UserServiceService } from './../../shared/user-service.service'; 
-import 'firebase';
+import { UserServiceService } from './../../shared/user-service.service';
 
 
 @Component({
+    moduleId: module.id,
     selector: 'scanList',
+    styleUrls: ['/app/+dashboard/scanlist/scanlist.component.css'],
     templateUrl: "/app/+dashboard/scanlist/scanlist.component.html",
     providers: [ScanService],
     directives: [DataTable, Column, SideBarFilterComponent] 

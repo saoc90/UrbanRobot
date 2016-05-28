@@ -3,7 +3,7 @@ import { ScanComponent } from './+scan';
 import { Routes , ROUTER_DIRECTIVES, ROUTER_PROVIDERS, Router, OnActivate} from '@angular/router';
 import { SettingComponent } from './+setting';
 import { DashboardComponent } from './+dashboard';
-import {MaterializeDirective} from "angular2-materialize";
+import { MaterializeDirective } from "angular2-materialize";
 import { LoginComponent } from './+login';
 import { UserServiceService } from './shared/user-service.service';
 
@@ -12,7 +12,7 @@ import { UserServiceService } from './shared/user-service.service';
   selector: 'urban-robot-app',
   templateUrl: 'urban-robot.component.html',
   styleUrls: ['urban-robot.component.css'],
-  directives: [ROUTER_DIRECTIVES, MaterializeDirective],
+  directives: [ROUTER_DIRECTIVES, MaterializeDirective, ScanComponent],
   providers: [ROUTER_PROVIDERS, UserServiceService]
 })
 @Routes([
