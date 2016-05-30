@@ -51,6 +51,8 @@ const barrels: string[] = [
   'app/+setting',
   'app/+dashboard',
   'app/+login',
+  'app/+scan/scan-history-list',
+  'app/+scan/scan-detail',
   /** @cli-barrel */
 ];
 

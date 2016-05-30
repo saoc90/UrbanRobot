@@ -1,19 +1,10 @@
-import {Scan} from "./scan";
 import {Injectable} from '@angular/core';
 import { Observable } from 'rxjs';
-import { AngularFire, FirebaseObjectObservable, FirebaseListObservable } from "angularfire2";
+import { AngularFire, FirebaseObjectObservable, FirebaseListObservable } from 'angularfire2';
 import 'rxjs/operator';
 
 @Injectable()
 export class ScanService {
-    private scans: Array<Scan> =
-    [
-        new Scan(),
-        new Scan(),
-        new Scan(),
-        new Scan(),
-        new Scan()
-    ];
 
     clientList: FirebaseListObservable<Client[]>;
 

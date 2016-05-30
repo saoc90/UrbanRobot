@@ -1,4 +1,4 @@
-export class SystemStatus{
+export class SystemStatus {
     public scanErrors: string;
     public scans: string;
     public systemLoad: string;

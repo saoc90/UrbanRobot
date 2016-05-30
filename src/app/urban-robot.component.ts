@@ -23,14 +23,13 @@ import { UserServiceService } from './shared/user-service.service';
   {path: '/login', component: LoginComponent}
 ])
 export class UrbanRobotAppComponent implements OnActivate {
-  title = 'urban-robot works!';
 
   constructor(private userService: UserServiceService, private router: Router) {
   }
-  
+
   routerOnActivate() {
-      if(!this.userService.isLogedIn()){
-        this.router.navigateByUrl("/login");
+      if (!this.userService.isLogedIn()) {
+        this.router.navigateByUrl('/login');
       }
   }
 }

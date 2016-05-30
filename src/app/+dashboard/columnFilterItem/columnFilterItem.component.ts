@@ -7,19 +7,18 @@ import { ColumnFilterItemModel } from '../shared/columnFilterItemModel';
     styleUrls: ['/app/+dashboard/columnFilterItem/columnFilterItem.component.css'],
 })
 export class ColumnFilterItem implements OnInit {
-    @Input("model") item: ColumnFilterItemModel;
-    @Output() onChanged: EventEmitter<ColumnFilterItemModel> ;
-    constructor() { 
+    @Input('model') item: ColumnFilterItemModel;
+    @Output() onChanged: EventEmitter<ColumnFilterItemModel>;
+    constructor() {
         this.onChanged = new EventEmitter<ColumnFilterItemModel>();
     }
-    
+
     ngOnInit() { }
-    
-    
-    onElementChange(event:any){
+
+    onElementChange(event: any) {
         this.onChanged.emit(event.target);
         console.log(this.item, event.target.checked);
         // this.item.checked = true;
-        
+
     }
 }
