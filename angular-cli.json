@@ -1,10 +1,14 @@
 {
   "project": {
-    "version": "1.0.0-beta.1",
+    "version": "1.0.0-beta.2-mobile.4",
     "name": "urban-robot"
   },
   "apps": [
-    {"main": "src/main.ts", "tsconfig": "src/tsconfig.json"}
+    {
+      "main": "src/main.ts",
+      "tsconfig": "src/tsconfig.json",
+      "mobile": false
+    }
   ],
   "addons": [],
   "packages": [],
@@ -20,6 +24,7 @@
   },
   "defaults": {
     "prefix": "app",
-    "sourceDir": "src"
+    "sourceDir": "src",
+    "styleExt": "css"
   }
 }
