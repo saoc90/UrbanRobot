@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { ScanService } from './../shared/scanService';
-import { Client } from './../shared/scanService';
+import { Client } from '../../+scan/shared/models/client';
 import { DataTable } from 'primeng/primeng';
 import { Column } from 'primeng/primeng';
 import { SideBarFilterComponent } from '../sideBarFilter/sideBarFilter.component';

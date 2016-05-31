@@ -1,3 +1,13 @@
 <p>
   scan-history-list works!
 </p>
+
+<div class="globalFilter ui-widget-header ui-helper-clearfix" style="padding:4px 10px;border-bottom: 0 none;">
+  <i class="fa fa-search" style="float:left;margin:4px 4px 0 0"></i>
+  <input #gb type="text" pInputText size="50" style="float:left" placeholder="Global Filter">
+</div>
+<p-dataTable [value]="scanHistoryEntries | async" [globalFilter]="gb">
+  <p-column field="date" header="DATE" sortable="true" [filter]="true" filterMatchMode="contains"></p-column>
+  <p-column field="deviceCount" header="Devices" sortable="true" [filter]="true" filterMatchMode="contains"></p-column>
+  <p-column field="clientDiff" header="Device +/-" sortable="true" [filter]="true" filterMatchMode="contains"></p-column>
+</p-dataTable>

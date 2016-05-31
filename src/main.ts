@@ -9,11 +9,11 @@ if (environment.production) {
 }
 
 bootstrap(UrbanRobotAppComponent, [
+  UserServiceService,
   FIREBASE_PROVIDERS,
   defaultFirebase('https://furry-happiness.firebaseio.com/'),
   firebaseAuthConfig({
     provider: AuthProviders.Password,
     method: AuthMethods.Password,
-  }),
-  UserServiceService
+  })
 ]);
