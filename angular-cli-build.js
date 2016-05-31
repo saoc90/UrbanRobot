@@ -10,7 +10,7 @@ module.exports = function (defaults) {
       'zone.js/dist/**/*.+(js|js.map)',
       'es6-shim/es6-shim.js',
       'reflect-metadata/**/*.+(ts|js|js.map)',
-      'rxjs/**/*.+(js|js.map)',
+      'rxjs/**/*.js',
       '@angular/**/*.+(js|js.map)',
       'angular2-materialize/dist/*.+(ts|js|js.map)',
       'materialize-css/dist/js/*.+(ts|js|js.map)',

@@ -20,5 +20,4 @@ export class ScanComponent implements OnInit {
   constructor() {}
   ngOnInit() {
   }
-
 }

@@ -15,8 +15,5 @@ describe('App: UrbanRobot', () => {
     expect(app).toBeTruthy();
   }));
 
-  it('should have as title \'urban-robot works!\'',
-      inject([UrbanRobotAppComponent], (app: UrbanRobotAppComponent) => {
-    expect(app.title).toEqual('urban-robot works!');
-  }));
+
 });

@@ -32,15 +32,8 @@ constructor(private userservice: UserServiceService,
   } 
 
   ngOnInit() {
-    this.af.object("/users/" + this.userservice.uid + "/role")
-      .subscribe(role => {
-        if(role=="admin"){
-          this.isAdmin = true;
-        } else {
-          this.isAdmin =false; 
-        }
-      });
-      this.getUserList();
+      this.userservice.userInfoRef.subscribe(user => this.isAdmin = user.role=="admin");
+      this.userList = this.getUserList();
   }
 
   createUser(){
@@ -51,9 +44,8 @@ constructor(private userservice: UserServiceService,
       this.error = null;
     }
     var uid = this.userservice.uid;
-    var company = this.af.object("/users/" + uid + "/company");
-    company.subscribe(company => {
-      this.userservice.createUser(this.email, this.passwordA, company, this.userRole)
+
+      this.userservice.createUser(this.email, this.passwordA, this.userRole)
         .then(() => {
           this.email = "";
           this.passwordA = "";
@@ -61,22 +53,14 @@ constructor(private userservice: UserServiceService,
           this.userRole = "";
           this.error = "";
         }).catch(error => this.error = error.message);
-    });
   }
   
   getUserList(){
-    this.af.object("/users/" + this.userservice.uid + "/company")
-        .subscribe(company => this.getUsersInMyCompany(company));
+    var companyID = this.userservice.userCompanyId;
+    return companyID.switchMap(id => this.af.list('/unternehmen/' + id + '/users'));
   }
   
-  private getUsersInMyCompany(company: any){
-    this.userList = this.af.list('/users', {
-      query: {
-        orderByChild: 'company',
-        equalTo: company,
-      }
-    });
-  }
+ 
 
   deleteUser(user){
     console.log(user , "In Delete User");

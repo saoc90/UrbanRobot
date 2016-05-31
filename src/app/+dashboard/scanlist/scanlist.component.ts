@@ -51,7 +51,7 @@ export class ScanListComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.userService.userCompany.subscribe(
+        this.userService.userCompanyId.subscribe(
             userCompany =>
                 this.scanService.getAllScans(userCompany).subscribe(a =>
                     this.scans = a)

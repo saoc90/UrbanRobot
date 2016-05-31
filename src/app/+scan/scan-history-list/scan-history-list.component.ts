@@ -18,7 +18,7 @@ export class ScanHistoryListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.userService.userCompany.subscribe(c =>
+    this.userService.userCompanyId.subscribe(c =>
      this.companyId = c);
 
     

@@ -29,7 +29,7 @@ constructor(private af: AngularFire, private provider: UserServiceService, priva
   }
 
   ngOnInit() {
-    this.provider.userCompany.subscribe(company =>
+    this.provider.userCompanyId.subscribe(company =>
       this.af.database.object('/unternehmenObj/' + company + '/systemStatus')
         .subscribe(systemStatus => this.setDashboardValues(systemStatus))
 

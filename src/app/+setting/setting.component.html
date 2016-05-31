@@ -60,6 +60,7 @@
         </thead>
         <tbody>
           <tr *ngFor="let user of userList | async">
+           
             <td style="padding-top:2px"> 
               <div class="input-field col s6">
                 <input [(ngModel)]='user.email' disabled 
@@ -97,7 +98,6 @@
                  style="background-color:red; "
                  class="waves-effect waves-light btn">
                   <i style="font-size: 25px" class="material-icons ">delete</i>
-                 
                </a>
             </td>
           </tr>
