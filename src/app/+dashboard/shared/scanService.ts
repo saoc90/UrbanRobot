@@ -6,14 +6,14 @@ import 'rxjs/operator';
 @Injectable()
 export class ScanService {
 
-    clientList: FirebaseListObservable<Client[]>;
+    clientList: FirebaseObjectObservable<LastScan>;
 
     constructor(private af: AngularFire) { }
     getAllScans(companyId: string): Observable<any> {
-        this.clientList = this.af.database.list('/unternehmenObj/' + companyId + '/lastScan');
+        this.clientList = this.af.database.object('/unternehmenObj/' + companyId + '/lastScan');
         var mappedClients = this.clientList.map(
             clientArray =>
-                clientArray.map(client => {
+                clientArray.inventory.client.map(client => {
                     return {
                         name: client.name,
                         applications: client.applications.app.length,
@@ -21,7 +21,7 @@ export class ScanService {
                         printers: client.printers.printer.length,
                         os: client.os.name,
                         cpu: client.cpu.model
-                    }
+                    };
                 })
 
         );
@@ -38,4 +38,12 @@ export interface Client {
     nics: any;
     os: any;
     printers: any;
+}
+
+export interface LastScan {
+    clientCountDiff: number;
+    inventory: {
+        client: Client[];
+        date: Date;
+    };
 }

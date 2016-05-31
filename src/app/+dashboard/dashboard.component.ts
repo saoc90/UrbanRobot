@@ -5,9 +5,13 @@ import { ScanListComponent } from './scanlist/scanlist.component';
 import { SideBarFilterComponent } from './sideBarFilter/sideBarFilter.component';
 import { SystemStatus } from './shared/systemStatus'
 import { AngularFire, FirebaseObjectObservable } from 'angularfire2';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 import { UserServiceService } from '../shared/user-service.service';
 import { Router, OnActivate } from '@angular/router';
+import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/operator/switchMap';
+
 
 @Component({
   selector: 'sd-home',
@@ -23,17 +27,18 @@ export class DashboardComponent implements OnActivate, OnInit {
   status: Observable<SystemStatus>;
   userRole: string = '';
 
-constructor(private af: AngularFire, private provider: UserServiceService, private router: Router) {
+  constructor(private af: AngularFire, private provider: UserServiceService, private router: Router) {
 
     // rovider.userRole.subscribe( u => this.userRole = u );
   }
 
   ngOnInit() {
-    this.provider.userCompanyId.subscribe(company =>
-      this.af.database.object('/unternehmenObj/' + company + '/systemStatus')
-        .subscribe(systemStatus => this.setDashboardValues(systemStatus))
 
-    );
+    this.provider.userCompanyId.distinctUntilChanged()
+      .switchMap(company =>
+        this.af.database.object('/unternehmenObj/' + company + '/systemStatus')
+      ).subscribe(systemStatus => this.setDashboardValues(systemStatus));
+
   }
 
   setDashboardValues(status: any) {
