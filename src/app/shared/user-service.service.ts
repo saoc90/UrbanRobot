@@ -37,7 +37,11 @@ export class UserServiceService {
     this.userCompanyId = companyID;
     var userObject: Observable<User> = companyID.combineLatest(user)
       .flatMap((userInfo: any) => this.af.object("/unternehmen/" + userInfo[0] + "/users/" + userInfo[1].uid));
-    this.userUid = userObject.map((user: User) => user.uid);
+    this.userUid = this.af.auth.map(authState => {
+      if(authState) {
+        return authState.uid;
+      }
+    });
 
     this.userInfoRef = userObject;
     userObject.subscribe(user => this.logedIn = !user.isDeleted);
