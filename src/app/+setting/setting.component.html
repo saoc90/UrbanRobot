@@ -53,7 +53,6 @@
           <tr>
               <th data-field="id">Email</th>
               <th data-field="name">Userrole</th>
-              <th> password</th>
               <th></th>
               <th></th>
           </tr>
@@ -75,13 +74,6 @@
                 <option value="visitor">Visitor</option>
                 <option value="inventor">Inventor</option>
               </select>
-            </td>
-            <td style="padding-top:2px">
-              <div class="input-field col s6">
-                <input type="password" class="validate"
-                        [(ngModel)]='user.password'>
-                <label for="last_name">Set new password</label>
-              </div>
             </td>
             <td style="width:20px;">
               <a (click)="SaveUserChanges(user)" 

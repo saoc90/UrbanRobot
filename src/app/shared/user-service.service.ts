@@ -44,7 +44,13 @@ export class UserServiceService {
     });
 
     this.userInfoRef = userObject;
-    userObject.subscribe(user => this.logedIn = !user.isDeleted);
+    userObject.subscribe(user => {
+      this.logedIn = !user.isDeleted;
+      if(user.isDeleted){
+        this.logout();
+      }
+      
+    });
 
     this.af.auth.filter(auth => auth == null)
       .subscribe(auth => this.logedIn = false);
@@ -69,7 +75,8 @@ export class UserServiceService {
       userInfo.set({
         email: email,
         isDeleted: false,
-        role: role
+        role: role,
+        uid: au.uid
       })
       const user = this.af.database.object("/users/" + au.uid);
       user.set(
