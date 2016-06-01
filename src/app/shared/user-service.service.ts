@@ -86,6 +86,34 @@ export class UserServiceService {
         });
     });
   }
+  
+  createANewUser(email: string, password: string, company: string) : Promise<any>{
+    var authData = this.af.auth.createUser( {email, password});
+    return authData.then(au => {
+       const user = this.af.database.object("/users/" + au.uid);
+      user.set(
+        {
+          company: au.uid,
+          uid: au.uid
+        });
+      const company = this.af.database.object('/unternehmen/' + au.uid);
+      company.set({
+        id : au.uid,
+        name : company,
+        users : {
+          
+        }
+      });
+      const userInfo = this.af.database.object('/unternehmen/' + au.uid + '/users/' + au.uid);
+      userInfo.set({
+        uid : au.uid,
+        role : 'admin',
+        isDeleted : false,
+        email: email
+      })
+     
+    })
+  }
 
   removeUser(user: User) {
     const userToRemove = this.af.database.object("/unternehmen/" + this.companyId + "/users/" + user.uid);

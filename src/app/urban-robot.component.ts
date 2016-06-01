@@ -5,6 +5,7 @@ import { SettingComponent } from './+setting';
 import { DashboardComponent } from './+dashboard';
 import { MaterializeDirective } from "angular2-materialize";
 import { LoginComponent } from './+login';
+import { RegisterComponent } from './register';
 import { UserServiceService } from './shared/user-service.service';
 
 @Component({
@@ -20,7 +21,8 @@ import { UserServiceService } from './shared/user-service.service';
   {path: '/scan', component: ScanComponent},
   {path: '/setting', component: SettingComponent},
   {path: '/dashboard', component: DashboardComponent},
-  {path: '/login', component: LoginComponent}
+  {path: '/login', component: LoginComponent},
+  {path: '/register', component: RegisterComponent}
 ])
 export class UrbanRobotAppComponent implements OnActivate {
 

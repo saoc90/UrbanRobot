@@ -56,8 +56,14 @@ constructor(private userservice: UserServiceService,
   }
   
   getUserList(){
-    var companyID = this.userservice.userCompanyId;
-    return companyID.switchMap(id => this.af.list('/unternehmen/' + id + '/users'));
+    //var companyID = this.userservice.userCompanyId;
+    //return companyID.switchMap(id => this.af.list('/unternehmen/' + id + '/users'));
+    return this.af.database.list('/unternehmen/' + this.userservice.companyId + '/users' , {
+      query : {
+        orderByChild: 'isDeleted',
+        equalTo: false
+      }
+    } )
   }
   
  
