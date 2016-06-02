@@ -20,6 +20,9 @@ export class LoginComponent implements OnInit {
 
   }
 
+  register(){
+    this.router.navigateByUrl('/register');
+  }
 
   doLogin(){
     this.userService.login(this.username, this.password);
