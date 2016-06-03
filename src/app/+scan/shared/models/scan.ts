@@ -24,19 +24,22 @@ export interface LastScan {
 
 export interface ScanEvent {
     clientDiff: number;
+    $key: string;
     inventory: {
         clients: Client[];
-        date: Date;
+        date: string;
     };
 }
 
 export class ScanListEntry {
-    date: Date;
+    date: string;
     deviceCount: number;
     clientDiff: number;
-    constructor(date: Date, deviceCount: number, deviceDiff: number) {
+    id: string;
+    constructor(date: string, deviceCount: number, deviceDiff: number, id: string) {
         this.date = date;
         this.deviceCount = deviceCount;
         this.clientDiff = deviceDiff;
+        this.id = id;
     }
 }

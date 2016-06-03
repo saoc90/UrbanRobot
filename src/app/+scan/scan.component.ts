@@ -13,7 +13,7 @@ import { ScanDetailComponent } from './scan-detail/scan-detail.component';
 @Routes([
   {path: '', component: ScanHistoryListComponent},
   {path: '/scanHistory', component: ScanHistoryListComponent},
-  {path: '/:id', component: ScanDetailComponent}
+  {path: '/detail', component: ScanDetailComponent}
 ])
 export class ScanComponent implements OnInit {
 

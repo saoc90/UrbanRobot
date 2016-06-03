@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ScanService } from '../shared/services/scan-service.service';
 import { UserServiceService } from '../../shared/user-Service.service';
 import { Observable } from 'rxjs';
@@ -23,7 +24,8 @@ export class ScanHistoryListComponent implements OnInit {
   scanHistoryEntries: Observable<ScanListEntry[]>;
 
   constructor(private scanService: ScanService,
-    private userService: UserServiceService) {
+    private userService: UserServiceService,
+    private router: Router) {
 
     this.scanHistory = this.userService.userCompanyId.switchMap(id =>
       this.scanService.getAllScans(id)
@@ -34,14 +36,20 @@ export class ScanHistoryListComponent implements OnInit {
     );
 
     this.scanHistoryEntries = this.scanHistory.map(event =>
-      event.map(e => new ScanListEntry(new Date, e.inventory.clients.length, e.clientDiff))
+      event.map(e => new ScanListEntry(
+        e.$key, e.inventory.clients.length, e.clientDiff, e.$key))
     );
-    
+
     this.scanHistoryEntries.subscribe(
-      s => 
+      s =>
       console.log(s)
     );
 
+  }
+
+  rowSelected(scan: ScanListEntry) {
+    this.router.navigate(['/scan/detail/', {id: scan.id}]);
+    console.log(scan);
   }
 
   ngOnInit() {

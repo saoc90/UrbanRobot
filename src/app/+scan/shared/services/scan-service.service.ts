@@ -21,4 +21,8 @@ export class ScanService {
     getAllScans(companyId: string): Observable<ScanEvent[]> {
        return this.af.list('/unternehmenObj/' + companyId + '/scandata');
     }
+
+    getScanById(companyId: string, scanId: string): Observable<ScanEvent> {
+        return this.af.object('/unternehmenObj/' + companyId + '/scandata/' + scanId);
+    }
 }
