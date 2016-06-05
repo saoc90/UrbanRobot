@@ -1,0 +1,77 @@
+<h2> Client </h2>
+<h4> General </h4>
+<div class="row">
+  <div class="col s12 m3 l3">
+    <div class="card">
+      <div class="card-content blue-grey white-text">
+        <p class="card-stats-title"><i class="medium material-icons">healing</i><br> Hostname</p>
+        <h4 class="card-stats-number">{{ clientObj?.name }}</h4>
+      </div>
+    </div>
+  </div>
+
+  <div class="col s12 m3 l3">
+    <div class="card">
+      <div class="card-content blue-grey white-text">
+        <h5 class="card-stats-title">OS</h5>
+        <p class="card-stats-number">{{ clientObj?.os?.name }}</p>
+        <p class="card-stats-number">{{ clientObj?.os?.architecture }}</p>
+        <p class="card-stats-number">Build {{ clientObj?.os?.build }}</p>
+        <p class="card-stats-number">SP {{ clientObj?.os?.servicePack }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="col s12 m3 l3">
+    <div class="card">
+      <div class="card-content blue-grey white-text">
+        <h5 class="card-stats-title">CPU</h5>
+        <p class="card-stats-number">{{ clientObj?.cpu?.model }}</p>
+        <p class="card-stats-number">{{ clientObj?.cpu?.manufacturer }}</p>
+        <p class="card-stats-number">{{ clientObj?.cpu?.cores }} Cores</p>
+        <p class="card-stats-number">{{ clientObj?.cpu?.clockspeed }} Mhz</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h4> Network Interfaces </h4>
+<div class="row">
+  <div *ngFor="let nic of clientObj?.nics?.nic" class="col s12 m3 l3">
+    <div class="card">
+      <div class="card-content blue-grey white-text">
+        <h5 class="card-stats-title">IF {{nic.id}}</h5>
+        <p class="card-stats-number">IP {{nic.ip}}</p>
+        <p class="card-stats-number">MAC {{nic.macaddr}}</p>
+        <p class="card-stats-number">GATEWAY {{nic.gateway}}</p>
+        <p class="card-stats-number" *ngIf="nic.dhcp">DHCP</p>
+        <p class="card-stats-number" style="color: black">{{nic.descr}}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h4> Printers </h4>
+
+<div class="row">
+  <div class="globalFilter ui-widget-header ui-helper-clearfix" style="padding:4px 10px;border-bottom: 0 none;">
+  <i class="fa fa-search" style="float:left;margin:4px 4px 0 0"></i>
+  <input #gb type="text" pInputText size="50" style="float:left" placeholder="Global Filter">
+</div>
+<p-dataTable [value]="clientObj?.printers?.printer"  [globalFilter]="gb" [paginator]="false" [pageLinks]="3" [rowsPerPageOptions]="[5,10,20]">
+  <p-column field="name" header="Name" sortable="true" [filter]="true" filterMatchMode="contains"></p-column>
+  <p-column field="driver" header="Driver" sortable="true" [filter]="true" filterMatchMode="contains"></p-column>
+</p-dataTable>
+  </div>
+
+<h4> Applications </h4>
+
+<div class="row">
+  <div class="globalFilter ui-widget-header ui-helper-clearfix" style="padding:4px 10px;border-bottom: 0 none;">
+  <i class="fa fa-search" style="float:left;margin:4px 4px 0 0"></i>
+  <input #gb type="text" pInputText size="50" style="float:left" placeholder="Global Filter">
+</div>
+<p-dataTable [value]="clientObj?.applications?.app"  [globalFilter]="gb" [paginator]="false" [pageLinks]="3" [rowsPerPageOptions]="[5,10,20]">
+  <p-column field="name" header="Name" sortable="true" [filter]="true" filterMatchMode="contains"></p-column>
+  <p-column field="version" header="Version" sortable="true" [filter]="true" filterMatchMode="contains"></p-column>
+</p-dataTable>
+  </div>

@@ -13,7 +13,6 @@ import 'rxjs/Rx';
   selector: 'app-scan-history-list',
   templateUrl: 'scan-history-list.component.html',
   styleUrls: ['scan-history-list.component.css'],
-  providers: [ScanService, UserServiceService],
   directives: [DataTable, Column]
 })
 export class ScanHistoryListComponent implements OnInit {

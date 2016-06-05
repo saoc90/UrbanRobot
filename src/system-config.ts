@@ -55,6 +55,7 @@ const barrels: string[] = [
   'app/+scan/scan-detail',
   'app/register',
   'app/+register',
+  'app/+scan/+client-detail',
   /** @cli-barrel */
 ];
 

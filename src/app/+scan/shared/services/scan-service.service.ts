@@ -1,4 +1,5 @@
 import { Scan, ScanEvent } from '../models/scan';
+import { Client } from '../models/client';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AngularFire, FirebaseObjectObservable, FirebaseListObservable } from 'angularfire2';
@@ -24,5 +25,15 @@ export class ScanService {
 
     getScanById(companyId: string, scanId: string): Observable<ScanEvent> {
         return this.af.object('/unternehmenObj/' + companyId + '/scandata/' + scanId);
+    }
+
+    getClientByIndex(companyId: string, scanId: string, index: string): Observable<Client> {
+       return this.af.object('/unternehmenObj/'
+       + companyId
+       + '/scandata/'
+       + scanId
+       + '/inventory/clients/'
+       + index
+       );
     }
 }

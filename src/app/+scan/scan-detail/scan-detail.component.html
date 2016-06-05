@@ -1,6 +1,10 @@
-<p>
-  {{id}}
- </p>
-<div> 
-   {{scan.clientDiff | async}}
-</div>
+<p-dataTable *ngIf="scan" [value]="(scan | async)?.inventory?.clients">
+  <p-column field="name" header="NAME OF CLIENT" sortable="true" [filter]="true" filterMatchMode="contains"></p-column>
+  <p-column styleClass="col-button">
+        <template let-scan="rowData">
+            <button class="waves-effect waves-light btn" type="button" pButton (click)="rowSelected(scan)" icon="fa-search">
+              <i class="material-icons">search</i>
+            </button>
+        </template>
+    </p-column>
+</p-dataTable>
