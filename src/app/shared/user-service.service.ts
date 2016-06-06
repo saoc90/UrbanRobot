@@ -21,7 +21,7 @@ export class UserServiceService {
   public uid: string;
   public companyId: string;
   constructor(private af: AngularFire) {
-
+    
     var userLoginEvent = this.af.auth.filter(authEvent => {
       if (authEvent) {
         return true;
@@ -71,48 +71,52 @@ export class UserServiceService {
   createUser(email: string, password: string, role: string) {
     var authData = this.af.auth.createUser({ email, password });
     return authData.then(au => {
-      const userInfo = this.af.database.object("/unternehmen/" + this.companyId + "/users/" + au.uid);
+      const userInfo = this.af.database.object
+                       ("/unternehmen/" + this.companyId + "/users/" + au.uid);
       userInfo.set({
         email: email,
         isDeleted: false,
         role: role,
         uid: au.uid
-      })
+      });
       const user = this.af.database.object("/users/" + au.uid);
       user.set(
         {
-          company: this.companyId,
+          role: role,
           uid: au.uid,
+          company: this.companyId
         });
     });
   }
   
+  
+  
   createANewUser(email: string, password: string, company: string) : Promise<any>{
     var authData = this.af.auth.createUser( {email, password});
-    return authData.then(au => {
-       const user = this.af.database.object("/users/" + au.uid);
+    return authData.then(au => { 
+       this.af.auth.login( {email, password} );
+       return authData;
+    }).then(au => {
+       const user = this.af.database.object('/users/' + au.uid);
       user.set(
         {
           company: au.uid,
-          uid: au.uid
+          role: 'admin',
+          uid: au.uid,
         });
-      const company = this.af.database.object('/unternehmen/' + au.uid);
+  /*    const company = this.af.database.object('/unternehmen/' + au.uid);
       company.set({
-        id : au.uid,
-        name : company,
-        users : {
-          
-        }
+          id : au.uid,
+          name : 'companyName'
       });
       const userInfo = this.af.database.object('/unternehmen/' + au.uid + '/users/' + au.uid);
       userInfo.set({
-        uid : au.uid,
-        role : 'admin',
-        isDeleted : false,
-        email: email
-      })
-     
-    })
+          uid : au.uid,
+          role : 'admin',
+          isDeleted : false,
+          email: email
+      }); */
+    });
   }
 
   removeUser(user: User) {
