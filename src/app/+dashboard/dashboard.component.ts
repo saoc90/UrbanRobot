@@ -11,13 +11,19 @@ import { UserServiceService } from '../shared/user-service.service';
 import { Router, OnActivate } from '@angular/router';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/map';
+import { UnitHistoryChartComponent } from './unit-history-chart/unit-history-chart.component';
+import { ScanService } from '../+scan/shared/services/scan-service.service';
 
 
 @Component({
   selector: 'sd-home',
   templateUrl: 'app/+dashboard/dashboard.component.html',
   styleUrls: ['app/+dashboard/dashboard.component.css'],
-  directives: [FORM_DIRECTIVES, CORE_DIRECTIVES, InputText, Button, Dialog, SideBarFilterComponent, ScanListComponent]
+  directives: [FORM_DIRECTIVES, CORE_DIRECTIVES, InputText,
+   Button, Dialog, SideBarFilterComponent, ScanListComponent,
+   UnitHistoryChartComponent],
+   providers: [ScanService]
 })
 export class DashboardComponent implements OnActivate, OnInit {
   systemStatus: string = 'hello';
@@ -26,9 +32,26 @@ export class DashboardComponent implements OnActivate, OnInit {
   errors: string;
   status: Observable<SystemStatus>;
   userRole: string = '';
+  unitCountOverTime: Observable<number[]>;
+  historyTitle: string;
+  options: Object;
 
-  constructor(private af: AngularFire, private provider: UserServiceService, private router: Router) {
-
+  constructor(private af: AngularFire,
+  private provider: UserServiceService,
+  private router: Router,
+  private scanService: ScanService) {
+    this.historyTitle = 'units history';
+    this.unitCountOverTime = this.provider.userCompanyId.switchMap(id =>
+      this.scanService.getAllScans(id).map(
+        scan => scan.map(
+          event => event.inventory.clients.client.length)
+    ));
+      this.unitCountOverTime.subscribe(c =>  {this.options = {
+      title: { text: "Unit history"},
+      series: [{
+        data: c
+      }]
+    };});
     // rovider.userRole.subscribe( u => this.userRole = u );
   }
 
@@ -38,7 +61,6 @@ export class DashboardComponent implements OnActivate, OnInit {
       .switchMap(company =>
         this.af.database.object('/unternehmenObj/' + company + '/systemStatus')
       ).subscribe(systemStatus => this.setDashboardValues(systemStatus));
-
   }
 
   setDashboardValues(status: any) {

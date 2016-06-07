@@ -36,6 +36,8 @@ export class ScanService {
     }
 }
 
+
+
 export interface LastScan {
     clientCountDiff: number;
     inventory: {

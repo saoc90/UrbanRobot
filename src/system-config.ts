@@ -8,7 +8,9 @@ const map: any = {
   'angular2-materialize': 'vendor/angular2-materialize',
   'primeng': 'vendor/primeng',
   'firebase': 'vendor/firebase/lib/firebase-web.js',
-  'angularfire2': 'vendor/angularfire2'
+  'angularfire2': 'vendor/angularfire2',
+  'angular2-highcharts': 'vendor/angular2-highcharts',
+  'highcharts/highstock.src':   'https://cdn.rawgit.com/highcharts/highcharts-dist/v4.2.1/highstock.js'
 };
 
 /** User packages configuration. */
@@ -24,7 +26,11 @@ const packages: any = {
   'angularfire2': {
     defaultExtension: 'js',
     main: 'angularfire2.js'
-  }
+  },
+  'angular2-highcharts': {
+    defaultExtension: 'js',
+    main: 'dist/index.js'
+  },
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -56,6 +62,7 @@ const barrels: string[] = [
   'app/register',
   'app/+register',
   'app/+scan/+client-detail',
+  'app/+dashboard/unit-history-chart',
   /** @cli-barrel */
 ];
 
