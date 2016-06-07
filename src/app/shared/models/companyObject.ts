@@ -2,14 +2,14 @@ export interface CompanyObject {
     lastScan: {
         clientCountDiff: number;
         timeStamp: string;
-        inventory: any;
+        inventory?: any;
     };
     scanRequested: number;
     systemStatus: {
         scanErrors: number;
         scans: number;
         systemLoad: number;
-        systemStatus: string;
+        systemStatus?: string;
     };
-    scandata: any;
+    scandata?: any;
 }

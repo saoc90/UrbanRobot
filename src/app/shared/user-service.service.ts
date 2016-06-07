@@ -3,6 +3,8 @@ import { AngularFire, FirebaseAuthState } from 'angularfire2';
 import { Observable} from 'rxjs';
 import 'rxjs/Rx';
 import { User } from './models/user';
+import { CompanyObject } from './models/companyObject';
+import 'firebase';
 
 
 @Injectable()
@@ -26,23 +28,15 @@ export class UserServiceService {
       }
     }
     );
-<<<<<<< HEAD
-    var user: Observable<any> = userLoginEvent.switchMap( userLoginEvent =>
+
+    var user: Observable<any> = userLoginEvent.switchMap(userLoginEvent =>
       <any>this.af.object('/users/' + userLoginEvent.uid)
-=======
-    var user: Observable<any> = userLoginEvent.switchMap(loginEvent =>
-      <any>this.af.object('/users/' + loginEvent.uid)
->>>>>>> origin/master
     );
     var companyID = user.map((userObject: any) => userObject.company);
     this.userCompanyId = companyID;
     var userObject: Observable<User> = companyID.combineLatest(user)
       .flatMap((userInfo: any) =>
-<<<<<<< HEAD
-      this.af.object('/unternehmen/' + userInfo[0] + '/users/' + userInfo[1].uid));
-=======
-          this.af.object('/unternehmen/' + userInfo[0] + '/users/' + userInfo[1].uid));
->>>>>>> origin/master
+        this.af.object('/unternehmen/' + userInfo[0] + '/users/' + userInfo[1].uid));
     this.userUid = this.af.auth.map(authState => {
       if (authState) {
         return authState.uid;
@@ -50,15 +44,9 @@ export class UserServiceService {
     });
 
     this.userInfoRef = userObject;
-<<<<<<< HEAD
-    userObject.subscribe( (u: User) => {
+    userObject.subscribe((u: User) => {
       this.logedIn = !u.isDeleted;
       if (u.isDeleted) {
-=======
-    userObject.subscribe(userRef => {
-      this.logedIn = !userRef.isDeleted;
-      if (userRef.isDeleted) {
->>>>>>> origin/master
         this.logout();
       }
 
@@ -84,7 +72,7 @@ export class UserServiceService {
     var authData = this.af.auth.createUser({ email, password });
     return authData.then(au => {
       const userInfo = this.af.database.object
-                       ('/unternehmen/' + this.companyId + '/users/' + au.uid);
+        ('/unternehmen/' + this.companyId + '/users/' + au.uid);
       userInfo.set({
         email: email,
         isDeleted: false,
@@ -101,52 +89,57 @@ export class UserServiceService {
     });
   }
 
-  createANewUser(email: string, password: string, company: string): Promise<any>{
-    var authData = this.af.auth.createUser( {email, password});
+  createANewUser(email: string, password: string, company: string): Promise<any> {
+    var authData = this.af.auth.createUser({ email, password });
     return authData.then(au => {
-       this.af.auth.login( {email, password} ).then(auth => {
-       const user = this.af.database.object('/users/' + auth.uid);
-      user.set(
-        {
-          company: auth.uid,
-          role: 'admin',
-          uid: auth.uid,
+      return this.af.auth.login({ email, password }).then(auth => {
+        const user = this.af.database.object('/users/' + auth.uid);
+        user.set(
+          {
+            company: auth.uid,
+            role: 'admin',
+            uid: auth.uid,
+          });
+        let companyNode = this.af.database.object('/unternehmen/' + auth.uid);
+        companyNode.set({
+          id: auth.uid,
+          name: company
         });
-      let companyNode = this.af.database.object('/unternehmen/' + auth.uid);
-      companyNode.set({
-          id : auth.uid,
-          name : company
-      });
-      const userInfo = this.af.database.object('/unternehmen/' + auth.uid + '/users/' + auth.uid);
-      userInfo.set({
-          uid : auth.uid,
-          role : 'admin',
-          isDeleted : false,
+        const userInfo = this.af.database.object('/unternehmen/' + auth.uid + '/users/' + auth.uid);
+        userInfo.set({
+          uid: auth.uid,
+          role: 'admin',
+          isDeleted: false,
           email: email
+        });
+        const companyObjNode = this.af.database.object('/unternehmenObj/' + au.uid);
+        companyObjNode.set(<CompanyObject>{
+          scanRequested: 0,
+          systemStatus: {
+            scanErrors: 0,
+            systemLoad: 0,
+            scans: 0,
+            systemStatus: 'install client app'
+          },
+          lastScan: {
+            clientCountDiff: 0,
+            timeStamp: ''
+          }
+        });
       });
-      this.af.database.object('/unternehmenObj/' + au.uid );
-       });
     });
   }
 
   removeUser(user: User) {
     const userToRemove =
-<<<<<<< HEAD
-    this.af.database.object('/unternehmen/' + this.companyId + '/users/' + user.uid);
-=======
-        this.af.database.object('/unternehmen/' + this.companyId + '/users/' + user.uid);
->>>>>>> origin/master
+      this.af.database.object('/unternehmen/' + this.companyId + '/users/' + user.uid);
     userToRemove.update({
       isDeleted: true
     });
   }
   updateUser(user: User) {
     const userToUpdate =
-<<<<<<< HEAD
-    this.af.database.object('/unternehmen/' + this.companyId + '/users/' + user.uid);
-=======
-        this.af.database.object('/unternehmen/' + this.companyId + '/users/' + user.uid);
->>>>>>> origin/master
+      this.af.database.object('/unternehmen/' + this.companyId + '/users/' + user.uid);
     userToUpdate.update({
       role: user.role
     });
@@ -158,6 +151,21 @@ export class UserServiceService {
 
   isLogedIn(): boolean {
     return this.logedIn;
+  }
+
+  resetPassword(email: string): Promise<any> {
+    return new Promise((resolved, reject) => {
+      var ref = new Firebase('https://furry-happiness.firebaseio.com/');
+      ref.resetPassword({
+        email: email
+      }, (error) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolved();
+        }
+      });
+    });
   }
 
 }

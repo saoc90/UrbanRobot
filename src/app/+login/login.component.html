@@ -1,32 +1,55 @@
-<div class="row  valign-wrapper">
-  <form class="valign col s12">
-    <div class="row valign">
-      <div class="input-field col s6" valign>
-        <i class="material-icons prefix">account_circle</i>
-        <input id="icon_prefix" type="text" [(ngModel)]="username" class="validate">
-        <label for="icon_prefix">Email</label>
+<div id="setting">
+  <h2>Login to SysVentory</h2>
+  <div class="row  valign-wrapper">
+    <form class="valign col s12">
+      <div class="row valign">
+        <div class="input-field col s12" valign>
+          <i class="material-icons prefix">account_circle</i>
+          <input id="icon_prefix" type="text" [(ngModel)]="username" class="validate">
+          <label for="icon_prefix">Email</label>
+        </div>
       </div>
-    </div>
-    <div class="row valign">
-      <div class="input-field col s6 valign">
-        <i class="material-icons prefix">lock</i>
-        <input id="password" [(ngModel)]="password" type="password" class="validate">
-        <label for="password">Password</label>
+      <div class="row valign">
+        <div class="input-field col s12 valign">
+          <i class="material-icons prefix">lock</i>
+          <input id="password" [(ngModel)]="password" type="password" class="validate">
+          <label for="password">Password</label>
+        </div>
       </div>
-    </div>
-    <div>
-      <p *ngIf="notValid" style="color:red">
-        {{notValid}}
-      </p>
-    </div>
-    <div class="row center">
-   <button class="btn waves-effect waves-light center" (click)="doLogin()" type="submit" name="action">Login
+      <div>
+        <p *ngIf="loginInvalid" style="color:red">
+          {{loginInvalid}}
+        </p>
+      </div>
+      <div class="row center">
+        <button class="btn waves-effect waves-light center" (click)="doLogin()" type="submit" name="action">Login
     <i class="material-icons right">send</i>
   </button>
-  <span style="margin:0 20px;"></span>
-  <button class="btn waves-effect waves-light center" (click)="register()" type="submit" name="action">Register
-    <i class="material-icons right">play_arrow</i>
+      </div>
+    </form>
+  </div>
+  <h2>Register</h2>
+  <p>Register now to Sysventory SaaS as a new company.</p>
+  <div class="row center">
+    <button class="btn waves-effect waves-light center" (click)="register()" type="submit" name="action">Register
+    <i class="material-icons right">send</i>
   </button>
   </div>
+  <h2>Forgot password</h2>
+  <form class="valign col s12">
+    <div class="row valign">
+      <div class="input-field col s12" valign>
+        <i class="material-icons prefix">account_circle</i>
+        <input id="icon_prefix" type="text" [(ngModel)]="emailOfPassworedForgotten" class="validate">
+        <label for="icon_prefix">Email</label>
+      </div>
+      <p *ngIf="errorForgotPassword" style="color:red">{{errorForgotPassword}}</p>
+      <p *ngIf="successForgotPassword" style="color:green">{{successForgotPassword}}</p>
+    </div>
+    <div class="row center">
+      <button class="btn waves-effect waves-light center" (click)="forgotPassword()" type="submit" name="action">Submit
+    <i class="material-icons right">send</i>
+  </button>
+    </div>
   </form>
 </div>
