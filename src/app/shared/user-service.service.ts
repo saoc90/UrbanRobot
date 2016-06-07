@@ -1,11 +1,8 @@
 import { Injectable } from '@angular/core';
-import { AngularFire, FirebaseAuthState, FirebaseObjectObservable } from 'angularfire2';
-import { Observable, Subject, BehaviorSubject} from 'rxjs';
-//import 'rxjs/add/operator/switchMap';
-//import 'rxjs/add/operator/filter';
+import { AngularFire, FirebaseAuthState } from 'angularfire2';
+import { Observable} from 'rxjs';
 import 'rxjs/Rx';
-// import 'rxjs/add/operator/combineLatest-static';
-import { User, UserRole} from './models/user';
+import { User } from './models/user';
 
 
 @Injectable()
@@ -14,14 +11,13 @@ export class UserServiceService {
   private logedIn: boolean = false;
   public user: Observable<FirebaseAuthState>;
   public userInfoRef: Observable<User>;
-  //public userRole: Observable<string>;
   public userUid: Observable<string>;
   public userCompanyId: Observable<string>;
 
   public uid: string;
   public companyId: string;
   constructor(private af: AngularFire) {
-    
+
     var userLoginEvent = this.af.auth.filter(authEvent => {
       if (authEvent) {
         return true;
@@ -30,26 +26,27 @@ export class UserServiceService {
       }
     }
     );
-    var user: Observable<any> = userLoginEvent.switchMap(userLoginEvent =>
-      <any>this.af.object('/users/' + userLoginEvent.uid)
+    var user: Observable<any> = userLoginEvent.switchMap(loginEvent =>
+      <any>this.af.object('/users/' + loginEvent.uid)
     );
     var companyID = user.map((userObject: any) => userObject.company);
     this.userCompanyId = companyID;
     var userObject: Observable<User> = companyID.combineLatest(user)
-      .flatMap((userInfo: any) => this.af.object('/unternehmen/' + userInfo[0] + '/users/' + userInfo[1].uid));
+      .flatMap((userInfo: any) =>
+          this.af.object('/unternehmen/' + userInfo[0] + '/users/' + userInfo[1].uid));
     this.userUid = this.af.auth.map(authState => {
-      if(authState) {
+      if (authState) {
         return authState.uid;
       }
     });
 
     this.userInfoRef = userObject;
-    userObject.subscribe(user => {
-      this.logedIn = !user.isDeleted;
-      if(user.isDeleted){
+    userObject.subscribe(userRef => {
+      this.logedIn = !userRef.isDeleted;
+      if (userRef.isDeleted) {
         this.logout();
       }
-      
+
     });
 
     this.af.auth.filter(auth => auth == null)
@@ -89,10 +86,9 @@ export class UserServiceService {
     });
   }
 
-
-  createANewUser(email: string, password: string, company: string): Promise<any> {
+  createANewUser(email: string, password: string, company: string): Promise<any>{
     var authData = this.af.auth.createUser( {email, password});
-    return authData.then(au => { 
+    return authData.then(au => {
        this.af.auth.login( {email, password} );
        return authData;
     }).then(au => {
@@ -103,10 +99,10 @@ export class UserServiceService {
           role: 'admin',
           uid: au.uid,
         });
-  /*    const company = this.af.database.object('/unternehmen/' + au.uid);
-      company.set({
+      let companyNode = this.af.database.object('/unternehmen/' + au.uid);
+      companyNode.set({
           id : au.uid,
-          name : 'companyName'
+          name : company
       });
       const userInfo = this.af.database.object('/unternehmen/' + au.uid + '/users/' + au.uid);
       userInfo.set({
@@ -114,18 +110,21 @@ export class UserServiceService {
           role : 'admin',
           isDeleted : false,
           email: email
-      }); */
+      });
+      this.af.database.object('/unternehmenObj/' + au.uid );
     });
   }
 
   removeUser(user: User) {
-    const userToRemove = this.af.database.object('/unternehmen/' + this.companyId + '/users/' + user.uid);
+    const userToRemove =
+        this.af.database.object('/unternehmen/' + this.companyId + '/users/' + user.uid);
     userToRemove.update({
       isDeleted: true
     });
   }
   updateUser(user: User) {
-    const userToUpdate = this.af.database.object('/unternehmen/' + this.companyId + '/users/' + user.uid);
+    const userToUpdate =
+        this.af.database.object('/unternehmen/' + this.companyId + '/users/' + user.uid);
     userToUpdate.update({
       role: user.role
     });
