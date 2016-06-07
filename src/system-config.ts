@@ -23,7 +23,7 @@ const packages: any = {
   'primeng': { defaultExtension: 'js' },
   "angularfire2": {
     defaultExtension: 'js',
-    main: 'dist/angularfire2.js'
+    main: 'angularfire2.js'
   }
 };
 
