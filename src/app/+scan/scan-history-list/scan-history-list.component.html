@@ -1,3 +1,31 @@
+<div *ngIf="scanRequest | async" class="row loading" >
+  <div class="col s12 m3 l3">
+    <h2>Scanning</h2>
+  </div>
+  <div class="col s12 m3 l3">
+    <div class="preloader-wrapper small active" style="margin: 32px;">
+      <div class="spinner-layer spinner-green-only">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div>
+        <div class="gap-patch">
+          <div class="circle"></div>
+        </div>
+        <div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="fixed-action-btn horizontal" style="top: 88px; right: 24px;">
+  <a (click)="requestScan()" class="btn-floating btn-large red">
+    <i class="large material-icons">add</i>
+  </a>
+</div>
+
+
 <div class="globalFilter ui-widget-header ui-helper-clearfix" style="padding:4px 10px;border-bottom: 0 none;">
   <i class="fa fa-search" style="float:left;margin:4px 4px 0 0"></i>
   <input #gb type="text" pInputText size="50" style="float:left" placeholder="Global Filter">
@@ -5,12 +33,12 @@
 <p-dataTable [value]="scanHistoryEntries | async" [globalFilter]="gb">
   <p-column field="date" header="DATE" sortable="true" [filter]="true" filterMatchMode="contains"></p-column>
   <p-column field="deviceCount" header="Devices" sortable="true" [filter]="true" filterMatchMode="contains"></p-column>
-  <p-column field="clientDiff" header="Device +/-" sortable="true" [filter]="true" filterMatchMode="contains"></p-column>
+  <p-column field="clientCountDiff" header="Device +/-" sortable="true" [filter]="true" filterMatchMode="contains"></p-column>
   <p-column styleClass="col-button">
-        <template let-scan="rowData">
-            <button class="waves-effect waves-light btn" type="button" pButton (click)="rowSelected(scan)" icon="fa-search">
+    <template let-scan="rowData">
+      <button class="waves-effect waves-light btn" type="button" pButton (click)="rowSelected(scan)" icon="fa-search">
               <i class="material-icons">search</i>
             </button>
-        </template>
-    </p-column>
+    </template>
+  </p-column>
 </p-dataTable>

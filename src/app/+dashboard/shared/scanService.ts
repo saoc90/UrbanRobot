@@ -17,9 +17,11 @@ export class ScanService {
                 clientArray.inventory.clients.client.map((client: Client) => {
                     return {
                         name: client.name,
-                        applications: client.applications.app.length,
-                        nics: client.nics.nic.length,
-                        printers: client.printers.printer.length,
+                        applications:
+                        client.applications.app.length ? client.applications.app.length : 1,
+                        nics: client.nics.nic.length ? client.nics.nic.lenght : 1,
+                        printers:
+                        client.printers.printer.length ? client.printers.printer.length : 1,
                         os: client.os.name,
                         cpu: client.cpu.model,
                         sid: client.sid,

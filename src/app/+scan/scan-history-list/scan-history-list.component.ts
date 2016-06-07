@@ -21,6 +21,7 @@ export class ScanHistoryListComponent implements OnInit {
   scanHistory: Observable<ScanEvent[]>;
   amountOfScans: Observable<number>;
   scanHistoryEntries: Observable<ScanListEntry[]>;
+  scanRequest: Observable<number>;
 
   constructor(private scanService: ScanService,
     private userService: UserServiceService,
@@ -44,11 +45,21 @@ export class ScanHistoryListComponent implements OnInit {
       console.log(s)
     );
 
+    this.scanRequest = this.userService.userCompanyId.switchMap(id =>
+      this.scanService.getScanRequest(id)
+    );
+
+    this.userService.userCompanyId.subscribe(id => this.companyId = id);
+
   }
 
   rowSelected(scan: ScanListEntry) {
     this.router.navigate(['/scan/detail/', {id: scan.id}]);
     console.log(scan);
+  }
+
+  requestScan(): void {
+    this.scanService.setScanRequest(this.companyId);
   }
 
   ngOnInit() {

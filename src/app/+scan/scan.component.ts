@@ -22,7 +22,13 @@ import { ClientDetailComponent } from './client-detail/client-detail.component';
 ])
 export class ScanComponent implements OnInit {
 
-  constructor() {}
+  constructor(private userservice: UserServiceService, private router: Router) {}
   ngOnInit() {
+  }
+
+    routerOnActivate() {
+      if (!this.userservice.isLogedIn()) {
+        this.router.navigateByUrl('/login');
+      }
   }
 }

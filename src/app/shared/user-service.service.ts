@@ -21,7 +21,7 @@ export class UserServiceService {
   public uid: string;
   public companyId: string;
   constructor(private af: AngularFire) {
-    
+
     var userLoginEvent = this.af.auth.filter(authEvent => {
       if (authEvent) {
         return true;
@@ -30,26 +30,27 @@ export class UserServiceService {
       }
     }
     );
-    var user: Observable<any> = userLoginEvent.switchMap(userLoginEvent =>
+    var user: Observable<any> = userLoginEvent.switchMap( userLoginEvent =>
       <any>this.af.object('/users/' + userLoginEvent.uid)
     );
     var companyID = user.map((userObject: any) => userObject.company);
     this.userCompanyId = companyID;
     var userObject: Observable<User> = companyID.combineLatest(user)
-      .flatMap((userInfo: any) => this.af.object('/unternehmen/' + userInfo[0] + '/users/' + userInfo[1].uid));
+      .flatMap((userInfo: any) =>
+      this.af.object('/unternehmen/' + userInfo[0] + '/users/' + userInfo[1].uid));
     this.userUid = this.af.auth.map(authState => {
-      if(authState) {
+      if (authState) {
         return authState.uid;
       }
     });
 
     this.userInfoRef = userObject;
-    userObject.subscribe(user => {
-      this.logedIn = !user.isDeleted;
-      if(user.isDeleted){
+    userObject.subscribe( (u: User) => {
+      this.logedIn = !u.isDeleted;
+      if (u.isDeleted) {
         this.logout();
       }
-      
+
     });
 
     this.af.auth.filter(auth => auth == null)
@@ -119,13 +120,15 @@ export class UserServiceService {
   }
 
   removeUser(user: User) {
-    const userToRemove = this.af.database.object('/unternehmen/' + this.companyId + '/users/' + user.uid);
+    const userToRemove =
+    this.af.database.object('/unternehmen/' + this.companyId + '/users/' + user.uid);
     userToRemove.update({
       isDeleted: true
     });
   }
   updateUser(user: User) {
-    const userToUpdate = this.af.database.object('/unternehmen/' + this.companyId + '/users/' + user.uid);
+    const userToUpdate =
+    this.af.database.object('/unternehmen/' + this.companyId + '/users/' + user.uid);
     userToUpdate.update({
       role: user.role
     });

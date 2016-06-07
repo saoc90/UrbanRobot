@@ -41,7 +41,7 @@ export class ScanDetailComponent implements OnInit, OnActivate {
 
   rowSelected(client: Client) {
     this.scan.map(s =>
-      s.inventory.clients.client.findIndex(c => c.name === client.name)
+      s.inventory.clients.client.findIndex(c => c.sid === client.sid)
     ).subscribe(index => {
       this.router.navigate(['/scan/clientDetail/', { id: index, scanId: this.id }]);
       console.log('Selected to following client: ', client);

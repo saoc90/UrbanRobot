@@ -27,6 +27,16 @@ export class ScanService {
         return this.af.object('/unternehmenObj/' + companyId + '/scandata/' + scanId);
     }
 
+    getScanRequest(companyId: string): Observable<number> {
+        return this.af.object('/unternehmenObj/' + companyId + '/scanRequested/');
+    }
+
+    setScanRequest(companyId: string): Promise<void> {
+        let scanRequest =
+            this.af.database.object('/unternehmenObj/' + companyId + '/scanRequested/');
+        return scanRequest.set(1);
+    }
+
     getClientByIndex(companyId: string, scanId: string, index: string): Observable<Client> {
        return this.af.object('/unternehmenObj/'
        + companyId
@@ -44,7 +54,7 @@ export class ScanService {
             client.applications.app = [application];
         }
 
-        if (!Array.isArray(client.nics.nic)){
+        if (!Array.isArray(client.nics.nic)) {
             var nic = client.nics.nic;
             client.nics.nic = [nic];
         }
