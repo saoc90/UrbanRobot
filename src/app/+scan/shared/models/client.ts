@@ -5,4 +5,6 @@ export interface Client {
     nics: any;
     os: any;
     printers: any;
+    ram: number;
+    sid: string;
 }

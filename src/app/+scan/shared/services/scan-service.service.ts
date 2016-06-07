@@ -32,8 +32,23 @@ export class ScanService {
        + companyId
        + '/scandata/'
        + scanId
-       + '/inventory/clients/'
+       + '/inventory/clients/client/'
        + index
-       );
+       ).map((c: Client) => this.mapArraysOfClient(c));
+    }
+
+    mapArraysOfClient(client: Client): Client {
+
+        if (!Array.isArray(client.applications.app)) {
+            var application = client.applications.app;
+            client.applications.app = [application];
+        }
+
+        if (!Array.isArray(client.nics.nic)){
+            var nic = client.nics.nic;
+            client.nics.nic = [nic];
+        }
+
+        return client;
     }
 }

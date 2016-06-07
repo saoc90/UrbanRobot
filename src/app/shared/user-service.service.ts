@@ -31,12 +31,12 @@ export class UserServiceService {
     }
     );
     var user: Observable<any> = userLoginEvent.switchMap(userLoginEvent =>
-      <any>this.af.object("/users/" + userLoginEvent.uid)
+      <any>this.af.object('/users/' + userLoginEvent.uid)
     );
     var companyID = user.map((userObject: any) => userObject.company);
     this.userCompanyId = companyID;
     var userObject: Observable<User> = companyID.combineLatest(user)
-      .flatMap((userInfo: any) => this.af.object("/unternehmen/" + userInfo[0] + "/users/" + userInfo[1].uid));
+      .flatMap((userInfo: any) => this.af.object('/unternehmen/' + userInfo[0] + '/users/' + userInfo[1].uid));
     this.userUid = this.af.auth.map(authState => {
       if(authState) {
         return authState.uid;
@@ -72,14 +72,14 @@ export class UserServiceService {
     var authData = this.af.auth.createUser({ email, password });
     return authData.then(au => {
       const userInfo = this.af.database.object
-                       ("/unternehmen/" + this.companyId + "/users/" + au.uid);
+                       ('/unternehmen/' + this.companyId + '/users/' + au.uid);
       userInfo.set({
         email: email,
         isDeleted: false,
         role: role,
         uid: au.uid
       });
-      const user = this.af.database.object("/users/" + au.uid);
+      const user = this.af.database.object('/users/' + au.uid);
       user.set(
         {
           role: role,
@@ -88,10 +88,9 @@ export class UserServiceService {
         });
     });
   }
-  
-  
-  
-  createANewUser(email: string, password: string, company: string) : Promise<any>{
+
+
+  createANewUser(email: string, password: string, company: string): Promise<any> {
     var authData = this.af.auth.createUser( {email, password});
     return authData.then(au => { 
        this.af.auth.login( {email, password} );
@@ -120,13 +119,13 @@ export class UserServiceService {
   }
 
   removeUser(user: User) {
-    const userToRemove = this.af.database.object("/unternehmen/" + this.companyId + "/users/" + user.uid);
+    const userToRemove = this.af.database.object('/unternehmen/' + this.companyId + '/users/' + user.uid);
     userToRemove.update({
       isDeleted: true
     });
   }
   updateUser(user: User) {
-    const userToUpdate = this.af.database.object("/unternehmen/" + this.companyId + "/users/" + user.uid);
+    const userToUpdate = this.af.database.object('/unternehmen/' + this.companyId + '/users/' + user.uid);
     userToUpdate.update({
       role: user.role
     });

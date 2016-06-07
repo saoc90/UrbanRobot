@@ -35,8 +35,8 @@
 </div>
 
 <h4> Network Interfaces </h4>
-<div class="row">
-  <div *ngFor="let nic of clientObj?.nics?.nic" class="col s12 m3 l3">
+<div *ngIf="isNicArray()" class="row">
+  <div  *ngFor="let nic of clientObj?.nics?.nic" class="col s12 m3 l3">
     <div class="card">
       <div class="card-content blue-grey white-text">
         <h5 class="card-stats-title">IF {{nic.id}}</h5>

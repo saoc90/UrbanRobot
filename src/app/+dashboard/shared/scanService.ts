@@ -14,14 +14,16 @@ export class ScanService {
         this.clientList = this.af.database.object('/unternehmenObj/' + companyId + '/lastScan');
         var mappedClients = this.clientList.map(
             clientArray =>
-                clientArray.inventory.clients.map(client => {
+                clientArray.inventory.clients.client.map((client: Client) => {
                     return {
                         name: client.name,
                         applications: client.applications.app.length,
                         nics: client.nics.nic.length,
                         printers: client.printers.printer.length,
                         os: client.os.name,
-                        cpu: client.cpu.model
+                        cpu: client.cpu.model,
+                        sid: client.sid,
+                        ram: client.ram
                     };
                 })
 
@@ -35,7 +37,9 @@ export class ScanService {
 export interface LastScan {
     clientCountDiff: number;
     inventory: {
-        clients: Client[];
+        clients: {
+           client: Client[];
+        };
         date: Date;
     };
 }

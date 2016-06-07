@@ -36,7 +36,7 @@ export class ScanHistoryListComponent implements OnInit {
 
     this.scanHistoryEntries = this.scanHistory.map(event =>
       event.map(e => new ScanListEntry(
-        e.$key, e.inventory.clients.length, e.clientDiff, e.$key))
+        e.$key, e.inventory.clients.client.length, e.clientCountDiff, e.$key))
     );
 
     this.scanHistoryEntries.subscribe(

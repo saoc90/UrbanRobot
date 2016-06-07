@@ -1,4 +1,4 @@
-<p-dataTable *ngIf="scan" [value]="(scan | async)?.inventory?.clients">
+<p-dataTable *ngIf="scan" [value]="(scan | async)?.inventory?.clients?.client">
   <p-column field="name" header="NAME OF CLIENT" sortable="true" [filter]="true" filterMatchMode="contains"></p-column>
   <p-column styleClass="col-button">
         <template let-scan="rowData">

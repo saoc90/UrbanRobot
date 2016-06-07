@@ -28,25 +28,31 @@ export class ScanListComponent implements OnInit {
             cpu: '',
             nics: '',
             printers: '',
-            os: ''
+            os: '',
+            sid: '',
+            ram: 0
         }
     ];
 
     public columnState: any = [{ 'name': 'name', 'checked': true },
+        { 'name': 'sid', 'checked': true },
         { 'name': 'applications', 'checked': true },
         { 'name': 'nics', 'checked': true },
         { 'name': 'printers', 'checked': true },
         { 'name': 'os', 'checked': true },
-        { 'name': 'cpu', 'checked': true }
+        { 'name': 'cpu', 'checked': true },
+        { 'name': 'ram', 'checked': false }
     ];
 
     constructor(private scanService: ScanService, private userService: UserServiceService) {
         this.columnState = [{ 'name': 'name', 'checked': true },
+            { 'name': 'sid', 'checked': true },
             { 'name': 'applications', 'checked': true },
             { 'name': 'nics', 'checked': true },
             { 'name': 'printers', 'checked': true },
             { 'name': 'os', 'checked': true },
-            { 'name': 'cpu', 'checked': true }
+            { 'name': 'cpu', 'checked': true },
+            { 'name': 'ram', 'checked': false }
         ];
     }
 

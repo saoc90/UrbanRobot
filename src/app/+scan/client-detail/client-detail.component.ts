@@ -39,4 +39,11 @@ export class ClientDetailComponent implements OnInit, OnActivate {
     this.client.subscribe(c => this.clientObj = c);
   }
 
+  isNicArray(): boolean {
+    if (this.clientObj) {
+      return (this.clientObj.nics.nic instanceof Array);
+    }
+    return false;
+  }
+
 }
