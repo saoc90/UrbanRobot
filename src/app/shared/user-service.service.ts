@@ -1,11 +1,8 @@
 import { Injectable } from '@angular/core';
-import { AngularFire, FirebaseAuthState, FirebaseObjectObservable } from 'angularfire2';
-import { Observable, Subject, BehaviorSubject} from 'rxjs';
-//import 'rxjs/add/operator/switchMap';
-//import 'rxjs/add/operator/filter';
+import { AngularFire, FirebaseAuthState } from 'angularfire2';
+import { Observable} from 'rxjs';
 import 'rxjs/Rx';
-// import 'rxjs/add/operator/combineLatest-static';
-import { User, UserRole} from './models/user';
+import { User } from './models/user';
 
 
 @Injectable()
@@ -14,7 +11,6 @@ export class UserServiceService {
   private logedIn: boolean = false;
   public user: Observable<FirebaseAuthState>;
   public userInfoRef: Observable<User>;
-  //public userRole: Observable<string>;
   public userUid: Observable<string>;
   public userCompanyId: Observable<string>;
 
@@ -30,14 +26,23 @@ export class UserServiceService {
       }
     }
     );
+<<<<<<< HEAD
     var user: Observable<any> = userLoginEvent.switchMap( userLoginEvent =>
       <any>this.af.object('/users/' + userLoginEvent.uid)
+=======
+    var user: Observable<any> = userLoginEvent.switchMap(loginEvent =>
+      <any>this.af.object('/users/' + loginEvent.uid)
+>>>>>>> origin/master
     );
     var companyID = user.map((userObject: any) => userObject.company);
     this.userCompanyId = companyID;
     var userObject: Observable<User> = companyID.combineLatest(user)
       .flatMap((userInfo: any) =>
+<<<<<<< HEAD
       this.af.object('/unternehmen/' + userInfo[0] + '/users/' + userInfo[1].uid));
+=======
+          this.af.object('/unternehmen/' + userInfo[0] + '/users/' + userInfo[1].uid));
+>>>>>>> origin/master
     this.userUid = this.af.auth.map(authState => {
       if (authState) {
         return authState.uid;
@@ -45,9 +50,15 @@ export class UserServiceService {
     });
 
     this.userInfoRef = userObject;
+<<<<<<< HEAD
     userObject.subscribe( (u: User) => {
       this.logedIn = !u.isDeleted;
       if (u.isDeleted) {
+=======
+    userObject.subscribe(userRef => {
+      this.logedIn = !userRef.isDeleted;
+      if (userRef.isDeleted) {
+>>>>>>> origin/master
         this.logout();
       }
 
@@ -90,45 +101,52 @@ export class UserServiceService {
     });
   }
 
-
-  createANewUser(email: string, password: string, company: string): Promise<any> {
+  createANewUser(email: string, password: string, company: string): Promise<any>{
     var authData = this.af.auth.createUser( {email, password});
-    return authData.then(au => { 
-       this.af.auth.login( {email, password} );
-       return authData;
-    }).then(au => {
-       const user = this.af.database.object('/users/' + au.uid);
+    return authData.then(au => {
+       this.af.auth.login( {email, password} ).then(auth => {
+       const user = this.af.database.object('/users/' + auth.uid);
       user.set(
         {
-          company: au.uid,
+          company: auth.uid,
           role: 'admin',
-          uid: au.uid,
+          uid: auth.uid,
         });
-  /*    const company = this.af.database.object('/unternehmen/' + au.uid);
-      company.set({
-          id : au.uid,
-          name : 'companyName'
+      let companyNode = this.af.database.object('/unternehmen/' + auth.uid);
+      companyNode.set({
+          id : auth.uid,
+          name : company
       });
-      const userInfo = this.af.database.object('/unternehmen/' + au.uid + '/users/' + au.uid);
+      const userInfo = this.af.database.object('/unternehmen/' + auth.uid + '/users/' + auth.uid);
       userInfo.set({
-          uid : au.uid,
+          uid : auth.uid,
           role : 'admin',
           isDeleted : false,
           email: email
-      }); */
+      });
+      this.af.database.object('/unternehmenObj/' + au.uid );
+       });
     });
   }
 
   removeUser(user: User) {
     const userToRemove =
+<<<<<<< HEAD
     this.af.database.object('/unternehmen/' + this.companyId + '/users/' + user.uid);
+=======
+        this.af.database.object('/unternehmen/' + this.companyId + '/users/' + user.uid);
+>>>>>>> origin/master
     userToRemove.update({
       isDeleted: true
     });
   }
   updateUser(user: User) {
     const userToUpdate =
+<<<<<<< HEAD
     this.af.database.object('/unternehmen/' + this.companyId + '/users/' + user.uid);
+=======
+        this.af.database.object('/unternehmen/' + this.companyId + '/users/' + user.uid);
+>>>>>>> origin/master
     userToUpdate.update({
       role: user.role
     });
