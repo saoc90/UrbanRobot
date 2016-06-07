@@ -89,29 +89,28 @@ export class UserServiceService {
   createANewUser(email: string, password: string, company: string): Promise<any>{
     var authData = this.af.auth.createUser( {email, password});
     return authData.then(au => {
-       this.af.auth.login( {email, password} );
-       return authData;
-    }).then(au => {
-       const user = this.af.database.object('/users/' + au.uid);
+       this.af.auth.login( {email, password} ).then(auth => {
+       const user = this.af.database.object('/users/' + auth.uid);
       user.set(
         {
-          company: au.uid,
+          company: auth.uid,
           role: 'admin',
-          uid: au.uid,
+          uid: auth.uid,
         });
-      let companyNode = this.af.database.object('/unternehmen/' + au.uid);
+      let companyNode = this.af.database.object('/unternehmen/' + auth.uid);
       companyNode.set({
-          id : au.uid,
+          id : auth.uid,
           name : company
       });
-      const userInfo = this.af.database.object('/unternehmen/' + au.uid + '/users/' + au.uid);
+      const userInfo = this.af.database.object('/unternehmen/' + auth.uid + '/users/' + auth.uid);
       userInfo.set({
-          uid : au.uid,
+          uid : auth.uid,
           role : 'admin',
           isDeleted : false,
           email: email
       });
       this.af.database.object('/unternehmenObj/' + au.uid );
+       });
     });
   }
 
