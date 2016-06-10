@@ -21,6 +21,13 @@ export class SettingComponent implements OnInit, OnActivate {
    isAdmin: boolean = false;
    userList: Observable<any[]>;
 
+   // Var for change Password:
+   private oldPassword: string;
+   private newPasswordA: string;
+   private newPasswordB: string;
+   private passwordError: string;
+   private passwordSuccess: string;
+
 constructor(private userservice: UserServiceService,
             private af: AngularFire,
             private router: Router) { }
@@ -34,6 +41,33 @@ constructor(private userservice: UserServiceService,
   ngOnInit() {
       this.userservice.userInfoRef.subscribe(user => this.isAdmin = user.role == 'admin');
       this.userList = this.getUserList();
+      this.passwordError = '';
+      this.passwordSuccess = '';
+  }
+
+  changePassword() {
+    this.passwordError = '';
+    this.passwordSuccess = '';
+    if (this.newPasswordA != this.newPasswordB) {
+      this.passwordError = 'Please Check Password';
+      return;
+    }
+    if (!this.newPasswordA || this.newPasswordA.length < 6) {
+      this.passwordError = 'password must be at least 6 characters';
+      return;
+    }
+    this.userservice.changePassword(this.oldPassword, this.newPasswordA)
+      .then(e => {
+        this.passwordSuccess = 'Password changed';
+      })
+      .catch(error => this.passwordError = error.text || error);
+      this.clearPasswordFields();
+  }
+
+  clearPasswordFields() {
+    this.newPasswordA = '';
+    this.newPasswordB = '';
+    this.oldPassword = '';
   }
 
   createUser() {
@@ -56,8 +90,6 @@ constructor(private userservice: UserServiceService,
   }
 
   getUserList(){
-    //var companyID = this.userservice.userCompanyId;
-    //return companyID.switchMap(id => this.af.list('/unternehmen/' + id + '/users'));
     return this.af.database.list('/unternehmen/' + this.userservice.companyId + '/users' , {
       query : {
         orderByChild: 'isDeleted',

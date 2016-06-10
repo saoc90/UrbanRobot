@@ -17,6 +17,7 @@ export class UserServiceService {
   public userCompanyId: Observable<string>;
 
   public uid: string;
+  public email: string;
   public companyId: string;
   constructor(private af: AngularFire) {
 
@@ -46,6 +47,7 @@ export class UserServiceService {
     this.userInfoRef = userObject;
     userObject.subscribe((u: User) => {
       this.logedIn = !u.isDeleted;
+      this.email = u.email;
       if (u.isDeleted) {
         this.logout();
       }
@@ -56,13 +58,14 @@ export class UserServiceService {
       .subscribe(auth => this.logedIn = false);
 
     companyID.subscribe(id => this.companyId = id);
+
   }
 
 
   login(email: string, password: string) {
     this.af.auth.login(
-      { email: email, password: password }
-    )
+      { email: email, password: password })
+      .then(auth => this.email = email )
       .catch(error =>
         console.log(error.error || error)
       );
@@ -158,6 +161,23 @@ export class UserServiceService {
       var ref = new Firebase('https://furry-happiness.firebaseio.com/');
       ref.resetPassword({
         email: email
+      }, (error) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolved();
+        }
+      });
+    });
+  }
+
+  changePassword(oldPassword: string, newPassword: string): Promise<any> {
+    return new Promise((resolved, reject) => {
+      var ref = new Firebase('https://furry-happiness.firebaseio.com/');
+      ref.changePassword({
+        email: this.email,
+        oldPassword: oldPassword,
+        newPassword: newPassword
       }, (error) => {
         if (error) {
           reject(error);
