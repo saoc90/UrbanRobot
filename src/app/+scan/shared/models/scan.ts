@@ -33,6 +33,7 @@ export interface ScanEvent {
         };
         date: string;
     };
+    timeStamp?: string;
 }
 
 export class ScanListEntry {

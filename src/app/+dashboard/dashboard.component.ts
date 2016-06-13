@@ -12,6 +12,7 @@ import { Router, OnActivate } from '@angular/router';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/combineLatest';
 import { UnitHistoryChartComponent } from './unit-history-chart/unit-history-chart.component';
 import { ScanService } from '../+scan/shared/services/scan-service.service';
 
@@ -32,7 +33,7 @@ export class DashboardComponent implements OnActivate, OnInit {
   errors: string;
   status: Observable<SystemStatus>;
   userRole: string = '';
-  unitCountOverTime: Observable<number[]>;
+  unitCountOverTime: Observable<any>;
   historyTitle: string;
   options: Object;
 
@@ -44,14 +45,16 @@ export class DashboardComponent implements OnActivate, OnInit {
     this.unitCountOverTime = this.provider.userCompanyId.switchMap(id =>
       this.scanService.getAllScans(id).map(
         scan => scan.map(
-          event => event.inventory.clients.client.length)
+          event => [ +event.$key , event.inventory.clients.client.length])
     ));
       this.unitCountOverTime.subscribe(c =>  {this.options = {
-      title: { text: "Unit history"},
+      title: { text: 'Unit history'},
       series: [{
         data: c
       }]
-    };});
+    };
+    console.log(c);
+  });
     // rovider.userRole.subscribe( u => this.userRole = u );
   }
 
