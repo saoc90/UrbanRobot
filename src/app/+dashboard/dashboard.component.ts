@@ -50,6 +50,7 @@ export class DashboardComponent implements OnActivate, OnInit {
       this.unitCountOverTime.subscribe(c =>  {this.options = {
       title: { text: 'Unit history'},
       series: [{
+        name: 'Units',
         data: c
       }]
     };
