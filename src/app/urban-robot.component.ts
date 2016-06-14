@@ -7,6 +7,7 @@ import { MaterializeDirective } from "angular2-materialize";
 import { LoginComponent } from './+login';
 import { RegisterComponent } from './register';
 import { UserServiceService } from './shared/user-service.service';
+import { AdminDashboardComponent } from './+admin-dashboard';
 
 @Component({
   moduleId: module.id,
@@ -22,11 +23,17 @@ import { UserServiceService } from './shared/user-service.service';
   {path: '/setting', component: SettingComponent},
   {path: '/dashboard', component: DashboardComponent},
   {path: '/login', component: LoginComponent},
-  {path: '/register', component: RegisterComponent}
+  {path: '/register', component: RegisterComponent},
+  {path: '/adminDashboard', component: AdminDashboardComponent}
 ])
 export class UrbanRobotAppComponent implements OnActivate {
 
+  private isAdmin: boolean;
+
   constructor(private userService: UserServiceService, private router: Router) {
+    this.userService.userInfoRef.subscribe(u => 
+      this.isAdmin = u.role.includes('administrator')
+    );
   }
 
   routerOnActivate() {

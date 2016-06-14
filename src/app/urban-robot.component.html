@@ -3,13 +3,15 @@
       <a href="#!" class="brand-logo">Logo</a>
       <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
       <ul class="right hide-on-med-and-down">
-        <li><a [routerLink]="['dashboard']">Dashboard</a></li>
-        <li><a [routerLink]="['scan']">Scans</a></li>
+        <li *ngIf="isAdmin"><a [routerLink]="['adminDashboard']">Admin Dashboard</a></li>
+        <li *ngIf="!isAdmin"><a [routerLink]="['dashboard']">Dashboard</a></li>
+        <li *ngIf="!isAdmin"><a [routerLink]="['scan']">Scans</a></li>
         <li><a [routerLink]="['setting']">Settings</a></li>
         <li>
           <a *ngIf="userService.isLogedIn()" (click)="userService.logout()" [routerLink]="['login']">Logout</a>
           <a *ngIf="!userService.isLogedIn()" [routerLink]="['login']">Login</a>
         </li>
+        
       </ul>
       <ul materialize="sideNav" class="side-nav" id="mobile-demo">
         <li><a [routerLink]="['dashboard']">Dashboard</a></li>
@@ -18,4 +20,6 @@
       </ul>
     </div>
   </nav>
+<div id="contentWrapper" class="content">
 <router-outlet></router-outlet>
+</div>
