@@ -15,7 +15,7 @@ import { AdminDashboardComponent } from './+admin-dashboard';
   templateUrl: 'urban-robot.component.html',
   styleUrls: ['urban-robot.component.css'],
   directives: [ROUTER_DIRECTIVES, MaterializeDirective, ScanComponent],
-  providers: [ROUTER_PROVIDERS, UserServiceService]
+  providers: [ROUTER_PROVIDERS]
 })
 @Routes([
   {path: '/', component: DashboardComponent},

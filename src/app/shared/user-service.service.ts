@@ -5,6 +5,7 @@ import 'rxjs/Rx';
 import { User } from './models/user';
 import { CompanyObject } from './models/companyObject';
 import 'firebase';
+import { LoginComponent } from '../+login/login.component';
 
 
 @Injectable()
@@ -19,10 +20,14 @@ export class UserServiceService {
   public uid: string;
   public email: string;
   public companyId: string;
+  private loginComponent: LoginComponent;
+  private loginProces: boolean = false;
+
   constructor(private af: AngularFire) {
 
     var userLoginEvent = this.af.auth.filter(authEvent => {
       if (authEvent) {
+
         return true;
       } else {
         return false;
@@ -48,6 +53,11 @@ export class UserServiceService {
     userObject.subscribe((u: User) => {
       this.logedIn = !u.isDeleted;
       this.email = u.email;
+              console.log('Login Event');
+      if (this.loginProces){
+        this.loginComponent.routeToDashboard();
+        this.loginProces = false;
+      }
       if (u.isDeleted) {
         this.logout();
       }
@@ -62,8 +72,10 @@ export class UserServiceService {
   }
 
 
-  login(email: string, password: string) {
-    this.af.auth.login(
+  login(email: string, password: string , loginComponent: LoginComponent): Promise<string> {
+    this.loginComponent = loginComponent;
+    this.loginProces = true;
+    return this.af.auth.login(
       { email: email, password: password })
       .then(auth => this.email = email )
       .catch(error =>
@@ -149,6 +161,17 @@ export class UserServiceService {
   }
 
   logout() {
+    this.logedIn = false;
+    this.companyId = null;
+    this.loginComponent = null;
+    this.email = null;
+    this.userInfoRef = null;
+    this.uid = null;
+    this.loginComponent = null;
+    this.loginProces = false;
+    this.user = null;
+    this.userCompanyId = null;
+    this.userUid = null;
     this.af.auth.logout();
   }
 
@@ -187,5 +210,4 @@ export class UserServiceService {
       });
     });
   }
-
 }
