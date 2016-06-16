@@ -1,2 +1,2 @@
-export {environment} from './environment';
-export {UrbanRobotAppComponent} from './urban-robot.component';
+export * from './environment';
+export * from './urban-robot.component';

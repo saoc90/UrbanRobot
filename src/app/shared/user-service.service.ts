@@ -36,13 +36,13 @@ export class UserServiceService {
     );
 
     var user: Observable<any> = userLoginEvent.switchMap(userLoginEvent =>
-      <any>this.af.object('/users/' + userLoginEvent.uid)
+      <any> this.af.database.object('/users/' + userLoginEvent.uid)
     );
     var companyID = user.map((userObject: any) => userObject.company);
     this.userCompanyId = companyID;
     var userObject: Observable<User> = companyID.combineLatest(user)
       .flatMap((userInfo: any) =>
-        this.af.object('/unternehmen/' + userInfo[0] + '/users/' + userInfo[1].uid));
+        this.af.database.object('/unternehmen/' + userInfo[0] + '/users/' + userInfo[1].uid));
     this.userUid = this.af.auth.map(authState => {
       if (authState) {
         return authState.uid;

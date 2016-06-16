@@ -7,7 +7,7 @@ const map: any = {
   'materialize': 'vendor/angular2-materialize',
   'angular2-materialize': 'vendor/angular2-materialize',
   'primeng': 'vendor/primeng',
-  'firebase': 'vendor/firebase/lib/firebase-web.js',
+  'firebase': 'vendor/firebase/firebase.js',
   'angularfire2': 'vendor/angularfire2',
   'angular2-highcharts': 'vendor/angular2-highcharts',
   'highcharts/highstock.src':   'https://cdn.rawgit.com/highcharts/highcharts-dist/v4.2.1/highstock.js'

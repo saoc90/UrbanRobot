@@ -1,6 +1,6 @@
 {
   "project": {
-    "version": "1.0.0-beta.2-mobile.4",
+    "version": "1.0.0-beta.6",
     "name": "urban-robot"
   },
   "apps": [
@@ -25,6 +25,8 @@
   "defaults": {
     "prefix": "app",
     "sourceDir": "src",
-    "styleExt": "css"
+    "styleExt": "css",
+    "prefixInterfaces": false,
+    "lazyRoutePrefix": "+"
   }
 }

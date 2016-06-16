@@ -54,7 +54,6 @@ export class AdminDashboardComponent implements OnInit {
         return combined;
       }
       );
-    this.devicesCompany.subscribe(s => console.log(s));
 
   }
 

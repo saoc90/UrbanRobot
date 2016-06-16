@@ -10,7 +10,7 @@ module.exports = function (defaults) {
       'zone.js/dist/**/*.+(js|js.map)',
       'es6-shim/es6-shim.js',
       'reflect-metadata/**/*.+(ts|js|js.map)',
-      'rxjs/**/*.js',
+      'rxjs/**/*.+(js|js.map)',
       '@angular/**/*.+(js|js.map)',
       'angular2-materialize/dist/*.+(ts|js|js.map)',
       'materialize-css/dist/js/*.+(ts|js|js.map)',
@@ -19,7 +19,7 @@ module.exports = function (defaults) {
       'primeng/**/*.+(ts|js|js.map)',
       'primeui/**/*.+(ts|js|js.map)',
       'angularfire2/**/*.+(ts|js|js.map)',
-      'firebase/lib/*.+(ts|js|js.map)',
+      'firebase/*.js',    
       'angular2-highcharts/dist/*.+(ts|js|js.map)'
 
     ]

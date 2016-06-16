@@ -5,8 +5,8 @@ import { ScanListComponent } from './scanlist/scanlist.component';
 import { SideBarFilterComponent } from './sideBarFilter/sideBarFilter.component';
 import { SystemStatus } from './shared/systemStatus'
 import { AngularFire, FirebaseObjectObservable } from 'angularfire2';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
+import { Observable } from 'rxjs/Rx';
+import { Subject } from 'rxjs/Rx';
 import { UserServiceService } from '../shared/user-service.service';
 import { Router, OnActivate } from '@angular/router';
 import 'rxjs/add/operator/distinctUntilChanged';
@@ -22,9 +22,9 @@ import { ScanService } from '../+scan/shared/services/scan-service.service';
   templateUrl: 'app/+dashboard/dashboard.component.html',
   styleUrls: ['app/+dashboard/dashboard.component.css'],
   directives: [FORM_DIRECTIVES, CORE_DIRECTIVES, InputText,
-   Button, Dialog, SideBarFilterComponent, ScanListComponent,
-   UnitHistoryChartComponent],
-   providers: [ScanService]
+    Button, Dialog, SideBarFilterComponent, ScanListComponent,
+    UnitHistoryChartComponent],
+  providers: [ScanService]
 })
 export class DashboardComponent implements OnActivate, OnInit {
   systemStatus: string = 'hello';
@@ -38,24 +38,25 @@ export class DashboardComponent implements OnActivate, OnInit {
   options: Object;
 
   constructor(private af: AngularFire,
-  private provider: UserServiceService,
-  private router: Router,
-  private scanService: ScanService) {
+    private provider: UserServiceService,
+    private router: Router,
+    private scanService: ScanService) {
     this.historyTitle = 'units history';
     this.unitCountOverTime = this.provider.userCompanyId.switchMap(id =>
       this.scanService.getAllScans(id).map(
         scan => scan.map(
-          event => [ +event.$key , event.inventory.clients.client.length])
-    ));
-      this.unitCountOverTime.subscribe(c =>  {this.options = {
-      title: { text: 'Unit history'},
+          event => [+event.$key * 1000, event.inventory.clients.client.length])
+      ));
+    this.unitCountOverTime.subscribe(c => {
+    this.options = {
+      title: { text: 'Unit history' },
       series: [{
         name: 'Units',
         data: c
       }]
     };
-    console.log(c);
-  });
+      console.log(c);
+    });
     // rovider.userRole.subscribe( u => this.userRole = u );
   }
 
@@ -65,13 +66,19 @@ export class DashboardComponent implements OnActivate, OnInit {
       .switchMap(company =>
         this.af.database.object('/unternehmenObj/' + company + '/systemStatus')
       ).subscribe(systemStatus => this.setDashboardValues(systemStatus));
+
+    this.provider.userCompanyId.distinctUntilChanged()
+      .switchMap(company =>
+        this.af.database.list('/unternehmenObj/' + company + '/scandata').distinctUntilChanged()
+      ).subscribe((obj: any) =>
+        this.scans = obj.length
+      );
   }
 
   setDashboardValues(status: any) {
     this.systemStatus = status.systemStatus;
     this.errors = status.scanErrors;
     this.systemLoad = status.systemLoad;
-    this.scans = status.scans;
   }
 
   routerOnActivate() {

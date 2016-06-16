@@ -20,15 +20,15 @@ export class ScanService {
     constructor(private af: AngularFire) { }
 
     getAllScans(companyId: string): Observable<ScanEvent[]> {
-       return this.af.list('/unternehmenObj/' + companyId + '/scandata');
+       return  this.af.database.list('/unternehmenObj/' + companyId + '/scandata');
     }
 
     getScanById(companyId: string, scanId: string): Observable<ScanEvent> {
-        return this.af.object('/unternehmenObj/' + companyId + '/scandata/' + scanId);
+        return  this.af.database.object('/unternehmenObj/' + companyId + '/scandata/' + scanId);
     }
 
     getScanRequest(companyId: string): Observable<number> {
-        return this.af.object('/unternehmenObj/' + companyId + '/scanRequested/');
+        return  this.af.database.object('/unternehmenObj/' + companyId + '/scanRequested/');
     }
 
     setScanRequest(companyId: string): Promise<void> {
@@ -38,7 +38,7 @@ export class ScanService {
     }
 
     getClientByIndex(companyId: string, scanId: string, index: string): Observable<Client> {
-       return this.af.object('/unternehmenObj/'
+       return this.af.database.object('/unternehmenObj/'
        + companyId
        + '/scandata/'
        + scanId
