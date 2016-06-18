@@ -37,6 +37,11 @@ export class ScanService {
         return scanRequest.set(1);
     }
 
+    removeScanById(companyId: string, id: string){
+        let scan = this.af.database.list('/unternehmenObj/' + companyId + '/scandata');
+        scan.remove(id);
+    }
+
     getClientByIndex(companyId: string, scanId: string, index: string): Observable<Client> {
        return this.af.database.object('/unternehmenObj/'
        + companyId

@@ -22,6 +22,7 @@ export class ScanHistoryListComponent implements OnInit {
   amountOfScans: Observable<number>;
   scanHistoryEntries: Observable<ScanListEntry[]>;
   scanRequest: Observable<number>;
+  userRole: Observable<string>;
 
   constructor(private scanService: ScanService,
     private userService: UserServiceService,
@@ -30,6 +31,8 @@ export class ScanHistoryListComponent implements OnInit {
     this.scanHistory = this.userService.userCompanyId.switchMap(id =>
       this.scanService.getAllScans(id)
     );
+
+    this.userRole = this.userService.userInfoRef.pluck<string>('role');
 
     this.scanHistory.subscribe(s =>
       console.log(s)
@@ -56,6 +59,13 @@ export class ScanHistoryListComponent implements OnInit {
   rowSelected(scan: ScanListEntry) {
     this.router.navigate(['/scan/detail/', {id: scan.id}]);
     console.log(scan);
+  }
+
+  removeScan(scan: ScanListEntry) {
+    confirm('Deleting this scan cannot be reverted, are you sure?');
+    if(confirm){
+      this.scanService.removeScanById(this.companyId, scan.id);
+    }
   }
 
   requestScan(): void {
