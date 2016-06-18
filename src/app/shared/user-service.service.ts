@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFire, FirebaseAuthState } from 'angularfire2';
+import { AngularFire, AngularFireAuth } from 'angularfire2';
 import { Observable} from 'rxjs';
 import 'rxjs/Rx';
 import { User } from './models/user';
@@ -40,7 +40,7 @@ export class UserServiceService {
     );
     var companyID = user.map((userObject: any) => userObject.company);
     this.userCompanyId = companyID;
-    var userObject: Observable<User> = companyID.combineLatest(user)
+    var userObject: Observable<User> = <Observable<User>> companyID.combineLatest(user)
       .flatMap((userInfo: any) =>
         this.af.database.object('/unternehmen/' + userInfo[0] + '/users/' + userInfo[1].uid));
     this.userUid = this.af.auth.map(authState => {
