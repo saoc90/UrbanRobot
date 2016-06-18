@@ -19,7 +19,7 @@ module.exports = function (defaults) {
       'primeng/**/*.+(ts|js|js.map)',
       'primeui/**/*.+(ts|js|js.map)',
       'angularfire2/**/*.+(ts|js|js.map)',
-      'firebase/*.js',    
+      'firebase/lib/*.+(ts|js|js.map)',
       'angular2-highcharts/dist/*.+(ts|js|js.map)'
 
     ]

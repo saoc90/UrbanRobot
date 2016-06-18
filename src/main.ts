@@ -13,12 +13,7 @@ if (environment.production) {
 bootstrap(UrbanRobotAppComponent, [
   UserServiceService,
   FIREBASE_PROVIDERS,
-  defaultFirebase({
-    apiKey: "AIzaSyDDS_B0YtnyB_4Kfeax7jeWNzWk7TW46CM",
-    authDomain: "furry-happiness.firebaseapp.com",
-    databaseURL: "https://furry-happiness.firebaseio.com",
-    storageBucket: "furry-happiness.appspot.com",
-  }),
+  defaultFirebase('https://furry-happiness.firebaseio.com/'),
   firebaseAuthConfig({
     provider: AuthProviders.Password,
     method: AuthMethods.Password,
