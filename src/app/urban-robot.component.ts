@@ -8,6 +8,7 @@ import { LoginComponent } from './+login';
 import { RegisterComponent } from './register';
 import { UserServiceService } from './shared/user-service.service';
 import { AdminDashboardComponent } from './+admin-dashboard';
+import { AdminSettingComponent } from './+admin-setting';
 
 @Component({
   moduleId: module.id,
@@ -24,7 +25,8 @@ import { AdminDashboardComponent } from './+admin-dashboard';
   {path: '/dashboard', component: DashboardComponent},
   {path: '/login', component: LoginComponent},
   {path: '/register', component: RegisterComponent},
-  {path: '/adminDashboard', component: AdminDashboardComponent}
+  {path: '/adminDashboard', component: AdminDashboardComponent},
+  {path: '/adminSettings', component: AdminSettingComponent}
 ])
 export class UrbanRobotAppComponent implements OnActivate {
 
@@ -35,7 +37,7 @@ export class UrbanRobotAppComponent implements OnActivate {
       this.isAdmin = u.role.includes('administrator')
     );
   }
-
+  
   routerOnActivate() {
       if (!this.userService.isLogedIn()) {
         this.router.navigateByUrl('/login');
