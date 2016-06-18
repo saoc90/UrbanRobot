@@ -9,7 +9,7 @@ import { AdminSettingComponent } from './admin-setting/admin-setting.component';
 @Component({
   moduleId: module.id,
   selector: 'app-setting',
-  directives: [MaterializeDirective],
+  directives: [MaterializeDirective, AdminSettingComponent],
   templateUrl: 'setting.component.html',
   styleUrls: ['setting.component.css']
 })
@@ -44,6 +44,10 @@ constructor(private userservice: UserServiceService,
       this.userList = this.getUserList();
       this.passwordError = '';
       this.passwordSuccess = '';
+  }
+
+  resetPassword(user){
+    this.userservice.resetPassword(user.email);
   }
 
   changePassword() {
