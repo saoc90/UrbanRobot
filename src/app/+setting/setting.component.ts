@@ -4,6 +4,7 @@ import { AngularFire, FirebaseObjectObservable, FirebaseListObservable } from 'a
 import { Observable } from 'rxjs';
 import {MaterializeDirective} from 'angular2-materialize';
 import { Router, OnActivate } from '@angular/router';
+import { AdminSettingComponent } from './admin-setting/admin-setting.component';
 
 @Component({
   moduleId: module.id,

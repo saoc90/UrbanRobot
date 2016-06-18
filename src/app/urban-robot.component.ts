@@ -8,7 +8,6 @@ import { LoginComponent } from './+login';
 import { RegisterComponent } from './register';
 import { UserServiceService } from './shared/user-service.service';
 import { AdminDashboardComponent } from './+admin-dashboard';
-import { AdminSettingComponent } from './+admin-setting';
 
 @Component({
   moduleId: module.id,
@@ -25,8 +24,7 @@ import { AdminSettingComponent } from './+admin-setting';
   {path: '/dashboard', component: DashboardComponent},
   {path: '/login', component: LoginComponent},
   {path: '/register', component: RegisterComponent},
-  {path: '/adminDashboard', component: AdminDashboardComponent},
-  {path: '/adminSettings', component: AdminSettingComponent}
+  {path: '/adminDashboard', component: AdminDashboardComponent}
 ])
 export class UrbanRobotAppComponent implements OnActivate {
 
