@@ -20,6 +20,7 @@ export class SettingComponent implements OnInit, OnActivate {
    email: string = '';
    userRole: string = '';
    isAdmin: boolean = false;
+   isAdministrator: boolean = false;
    userList: Observable<any[]>;
 
    // Var for change Password:
@@ -40,7 +41,10 @@ constructor(private userservice: UserServiceService,
   }
 
   ngOnInit() {
-      this.userservice.userInfoRef.subscribe(user => this.isAdmin = user.role == 'admin');
+      this.userservice.userInfoRef.subscribe(user =>{
+         this.isAdmin = user.role == 'admin';
+         this.isAdministrator = user.role == 'administrator';
+      });
       this.userList = this.getUserList();
       this.passwordError = '';
       this.passwordSuccess = '';
