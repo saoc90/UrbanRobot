@@ -104,6 +104,28 @@ export class UserServiceService {
     });
   }
 
+  createAdministrator(email: string, password: string, role, string){
+    var authData = this.af.auth.createUser({ email, password });
+    return authData.then(au => {
+      const user = this.af.database.object('/users/' + au.uid);
+      user.set(
+        {
+          role: role,
+          uid: au.uid,
+          company: this.companyId
+        });
+        const admin = this.af.database.object('/admins/' + au.uid);
+        admin.set(
+          {
+            role: role,
+            email: email,
+            uid: au.uid
+          }
+        )
+    });
+    
+  }
+ 
   createANewUser(email: string, password: string, company: string): Promise<any> {
     var authData = this.af.auth.createUser({ email, password });
     return authData.then(au => {
@@ -192,6 +214,7 @@ export class UserServiceService {
         }
       });
     });
+    
   }
 
   changePassword(oldPassword: string, newPassword: string): Promise<any> {
