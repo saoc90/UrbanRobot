@@ -12,7 +12,6 @@ export class LoginComponent implements OnInit {
 
   private username: string;
   private password: string;
-  private loginInvalid: string;
   private errorForgotPassword: string;
   private successForgotPassword: string;
   private emailOfPassworedForgotten: string;
@@ -30,19 +29,7 @@ export class LoginComponent implements OnInit {
 
   doLogin() {
     this.userService.login(this.username, this.password, this)
-      .then(aut => {
-        this.userService.userUid.subscribe(user => {
-          if (user) {
-            this.loginInvalid = null;
-
-            console.log('user is now logged in', user);
-          } else {
-            this.loginInvalid = 'Wrong email or password';
-          }
-        },
-          error => console.error(error));
-      });
-}
+  }
 
   routeToDashboard(query: string){
       this.resetEntries();
@@ -68,6 +55,6 @@ export class LoginComponent implements OnInit {
   resetEntries() {
     this.errorForgotPassword = '';
     this.successForgotPassword = '';
-    this.loginInvalid = '';
+    this.userService.loginError = '';
   }
 }

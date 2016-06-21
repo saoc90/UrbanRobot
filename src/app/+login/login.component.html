@@ -17,8 +17,8 @@
         </div>
       </div>
       <div>
-        <p *ngIf="loginInvalid" style="color:red">
-          {{loginInvalid}}
+        <p *ngIf="userService.loginError" style="color:red">
+          {{userService.loginError}}
         </p>
       </div>
       <div class="row center">

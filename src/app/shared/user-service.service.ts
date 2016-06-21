@@ -22,6 +22,7 @@ export class UserServiceService {
   public companyId: string;
   private loginComponent: LoginComponent;
   private loginProces: boolean = false;
+  public loginError: string;
 
   constructor(private af: AngularFire) {
 
@@ -55,9 +56,7 @@ export class UserServiceService {
     userObject.subscribe((u: User) => {
       this.logedIn = !u.isDeleted;
       this.email = u.email;
-      this.checkCompany();
-        
-        //this.loginProces = false;
+      this.checkCompany();false;
       
       if (u.isDeleted) {
         this.logout();
@@ -76,12 +75,13 @@ export class UserServiceService {
         this.af.database.object('/unternehmen/' + this.companyId)
       .subscribe(company => {
         if(company.isDeactivated){
+           this.loginError = 'Your Company is deactivated';
            this.logout();
         } else {
                 if (this.loginProces){
         this.userInfoRef.subscribe(ref => {
           var role: string = ref.role;
-          
+          this.loginError = null;
           if(role=='administrator'){
           this.loginComponent.routeToDashboard('/adminDashboard');
           } else {
@@ -95,15 +95,17 @@ export class UserServiceService {
   }
 
 
-  login(email: string, password: string , loginComponent: LoginComponent): Promise<string> {
+  login(email: string, password: string , loginComponent: LoginComponent): Promise<any> {
     this.loginComponent = loginComponent;
     this.loginProces = true;
     return this.af.auth.login(
       { email: email, password: password })
-      .then(auth => this.email = email )
-      .catch(error =>
-        console.log(error.error || error)
-      );
+      .then(auth => {
+        this.email = email;
+      })
+      .catch(error => {
+        this.loginError = 'Wrong email or password!';
+      });
   }
 
   createUser(email: string, password: string, role: string) {
