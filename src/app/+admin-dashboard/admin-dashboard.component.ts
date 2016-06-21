@@ -25,6 +25,7 @@ export class AdminDashboardComponent implements OnInit {
   private systemHealth: string = 'healthy' || 'faulty';
   private systemLoad: string = 'idle' || 'busy' || 'gasping' || 'gonna die';
   private devicesCompany: Observable<any>;
+  private systemLoadPercent: Observable<number>;
 
   constructor(private adminService: AdminServiceService) {
 
@@ -47,13 +48,24 @@ export class AdminDashboardComponent implements OnInit {
           combined.push(
             {
               name: company.name,
-              devices: companyObj[index].lastScan.inventory != null ? companyObj[index].lastScan.inventory.clients.client.length : 0
+              devices: companyObj[index].lastScan.inventory != null ? companyObj[index].lastScan.inventory.clients.client.length : 0,
+              systemLoad: companyObj[index].scanRequested == 1 ? 100 : 0
             }
           )
         );
         return combined;
       }
       );
+     this.systemLoadPercent = this.devicesCompany.map( (companyArray: any[]) => {
+        var count = 0;
+        var percent = 0;
+        companyArray.forEach(c => {
+          count += 1;
+          percent += c.systemLoad;
+        })
+
+        return percent/count;
+      });
 
   }
 
