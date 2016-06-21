@@ -12,7 +12,7 @@
     <div class="card">
       <div class="card-content blue-grey white-text">
         <p class="card-stats-title"><i class="medium material-icons">trending_up</i><br> Systemload</p>
-        <h4 class="card-stats-number">{{ systemLoad }}</h4>
+        <h4 class="card-stats-number">{{ systemLoadPercent | async }}%</h4>
       </div>
     </div>
   </div>
@@ -37,5 +37,6 @@
 <p-dataTable *ngIf="devicesCompany" [value]="devicesCompany | async">
   <p-column field="name" header="NAME OF COMPANY" sortable="true" [filter]="true" filterMatchMode="contains"></p-column>
   <p-column field="devices" header="AMOUNT OF DEVICES" sortable="true" [filter]="true" filterMatchMode="contains"></p-column>
+  <p-column field="systemLoad" header="SystemLoad in %" sortable="true" [filter]="true" filterMatchMode="contains"></p-column>
 </p-dataTable>
   
