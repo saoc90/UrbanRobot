@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit {
 
   routeToDashboard(query: string){
       this.resetEntries();
-      this.router.navigateByUrl('/dashboard');
+      this.router.navigateByUrl(query);
   }
 
   forgotPassword() {

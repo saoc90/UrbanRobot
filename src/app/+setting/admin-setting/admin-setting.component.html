@@ -30,12 +30,18 @@
               </button>
             </td>
             <td style="width:20px;">
-              <a (click)="toggleUser(user)" 
+              <a *ngIf="!user.isDeleted" (click)="toggleUser(user)" 
                   
                  title="Delete User"
                  style="background-color:red; "
                  class="waves-effect waves-light btn">
-                  <i style="font-size: 25px" class="material-icons ">delete</i>
+                  <i  style="font-size: 25px" class="material-icons ">delete</i>
+               </a>
+               <a *ngIf="user.isDeleted" (click)="toggleUser(user)" 
+                  
+                 title="Delete User"
+                 class="waves-effect waves-light btn">
+                  <i  style="font-size: 25px" class="material-icons ">settings_backup_restore</i>
                </a>
             </td>
           </tr>

@@ -28,12 +28,7 @@ error: string = '';
 
   ngOnInit() {
     this.getAllCompanys();
-    this.adminUsers = this.af.database.list('/admins' , {
-      query : {
-        orderByChild: 'isDeleted',
-        equalTo: false
-      }
-    });
+    this.adminUsers = this.af.database.list('/admins');
   }
 
   getAllCompanys(){

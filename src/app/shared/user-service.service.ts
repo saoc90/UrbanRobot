@@ -49,15 +49,16 @@ export class UserServiceService {
       }
     });
 
+
+
     this.userInfoRef = userObject;
     userObject.subscribe((u: User) => {
       this.logedIn = !u.isDeleted;
       this.email = u.email;
-              console.log('Login Event');
-      if (this.loginProces){
-        this.loginComponent.routeToDashboard('');
-        this.loginProces = false;
-      }
+      this.checkCompany();
+        
+        //this.loginProces = false;
+      
       if (u.isDeleted) {
         this.logout();
       }
@@ -69,6 +70,28 @@ export class UserServiceService {
 
     companyID.subscribe(id => this.companyId = id);
 
+  }
+
+  checkCompany(){
+        this.af.database.object('/unternehmen/' + this.companyId)
+      .subscribe(company => {
+        if(company.isDeactivated){
+           this.logout();
+        } else {
+                if (this.loginProces){
+        this.userInfoRef.subscribe(ref => {
+          var role: string = ref.role;
+          
+          if(role=='administrator'){
+          this.loginComponent.routeToDashboard('/adminDashboard');
+          } else {
+          this.loginComponent.routeToDashboard('/dashboard');
+          }
+        });
+        this.loginProces = false;
+        }
+      };
+  });
   }
 
 
