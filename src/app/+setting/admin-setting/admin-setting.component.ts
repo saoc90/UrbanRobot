@@ -49,7 +49,7 @@ createUser() {
     }
     var uid = this.userservice.uid;
 
-      this.userservice.createUser(this.email, this.passwordA, 'administator')
+      this.userservice.createAdministrator(this.email, this.passwordA, 'administator')
         .then(() => {
           this.email = '';
           this.passwordA = '';

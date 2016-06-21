@@ -104,22 +104,25 @@ export class UserServiceService {
     });
   }
 
-  createAdministrator(email: string, password: string, role, string){
+
+  createAdministrator(email: string, password: string, role: string){
     var authData = this.af.auth.createUser({ email, password });
     return authData.then(au => {
       const user = this.af.database.object('/users/' + au.uid);
+      console.log(au.uid);
       user.set(
         {
-          role: role,
+          role: 'administrator',
           uid: au.uid,
-          company: this.companyId
+          company: '-'
         });
         const admin = this.af.database.object('/admins/' + au.uid);
         admin.set(
           {
             role: role,
             email: email,
-            uid: au.uid
+            uid: au.uid,
+            isDeleted: false
           }
         )
     });
@@ -140,7 +143,8 @@ export class UserServiceService {
         let companyNode = this.af.database.object('/unternehmen/' + auth.uid);
         companyNode.set({
           id: auth.uid,
-          name: company
+          name: company,
+          users: ''
         });
         const userInfo = this.af.database.object('/unternehmen/' + auth.uid + '/users/' + auth.uid);
         userInfo.set({
