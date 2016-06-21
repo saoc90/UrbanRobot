@@ -34,6 +34,7 @@
   <p-column field="date" header="DATE" sortable="true" [filter]="true" filterMatchMode="contains"></p-column>
   <p-column field="deviceCount" header="Devices" sortable="true" [filter]="true" filterMatchMode="contains"></p-column>
   <p-column field="clientCountDiff" header="Device +/-" sortable="true" [filter]="true" filterMatchMode="contains"></p-column>
+  <p-column field="hasFailed" header="Scan failed" sortable="true" [filter]="true" filterMatchMode="contains"></p-column>
   <p-column styleClass="col-button">
     <template let-scan="rowData">
       <button class="waves-effect waves-light btn" type="button" pButton (click)="rowSelected(scan)" icon="fa-search">

@@ -34,6 +34,7 @@ export interface ScanEvent {
         date: string;
     };
     timeStamp?: string;
+    hasFailed?: boolean;
 }
 
 export class ScanListEntry {
@@ -41,10 +42,12 @@ export class ScanListEntry {
     deviceCount: number;
     clientCountDiff: number;
     id: string;
-    constructor(date: string, deviceCount: number, deviceDiff: number, id: string) {
+    hasFailed: boolean;
+    constructor(date: string, deviceCount: number, deviceDiff: number, id: string, hasFailed: boolean) {
         this.date = date;
         this.deviceCount = deviceCount;
         this.clientCountDiff = deviceDiff;
         this.id = id;
+        this.hasFailed = hasFailed;
     }
 }

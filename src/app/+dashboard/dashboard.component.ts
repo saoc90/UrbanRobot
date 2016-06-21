@@ -28,7 +28,7 @@ import { ScanService } from '../+scan/shared/services/scan-service.service';
 })
 export class DashboardComponent implements OnActivate, OnInit {
   systemStatus: string = 'hello';
-  scans: string;
+  scans: number;
   systemLoad: string;
   errors: string;
   status: Observable<SystemStatus>;
@@ -36,6 +36,7 @@ export class DashboardComponent implements OnActivate, OnInit {
   unitCountOverTime: Observable<any>;
   historyTitle: string;
   options: Object;
+  errorPercentage: string = "100";
 
   constructor(private af: AngularFire,
     private provider: UserServiceService,
@@ -48,14 +49,13 @@ export class DashboardComponent implements OnActivate, OnInit {
           event => [+event.$key * 1000, event.inventory.clients.client.length])
       ));
     this.unitCountOverTime.subscribe(c => {
-    this.options = {
-      title: { text: 'Unit history' },
-      series: [{
-        name: 'Units',
-        data: c
-      }]
-    };
-      console.log(c);
+      this.options = {
+        title: { text: 'Unit history' },
+        series: [{
+          name: 'Units',
+          data: c
+        }]
+      };
     });
     // rovider.userRole.subscribe( u => this.userRole = u );
   }
@@ -67,6 +67,17 @@ export class DashboardComponent implements OnActivate, OnInit {
         this.af.database.object('/unternehmenObj/' + company + '/systemStatus')
       ).subscribe(systemStatus => this.setDashboardValues(systemStatus));
 
+    this.provider.userCompanyId.distinctUntilChanged()
+      .switchMap(company =>
+        this.af.database.object('/unternehmenObj/' + company)
+      ).subscribe((systemStatus: any) => {
+        this.systemLoad = systemStatus.scanRequested == 1 ? '100%' : '0%';
+        this.errors = "" + Object.keys(systemStatus.scandata).filter(s =>
+          systemStatus.scandata[s].hasFailed
+        ).length;
+        this.errorPercentage = ((+this.errors) / (+this.scans) * 100).toFixed(2);
+      }
+      );
     this.provider.userCompanyId.distinctUntilChanged()
       .switchMap(company =>
         this.af.database.list('/unternehmenObj/' + company + '/scandata').distinctUntilChanged()
