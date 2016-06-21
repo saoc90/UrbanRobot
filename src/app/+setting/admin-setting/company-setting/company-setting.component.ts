@@ -33,11 +33,28 @@ export class CompanySettingComponent implements OnInit {
   }
 
     deleteUser(user){
-    this.userservice.removeUser(user);
+    const userToDelete = this.af.database.object('/unternehmen/' + this.companyID + '/users/' + user.uid);
+    userToDelete.update({
+      isDeleted : true
+    });
+  }
+
+  resetUser(user){
+    const userToDelete = this.af.database.object('/unternehmen/' + this.companyID + '/users/' + user.uid);
+    userToDelete.update({
+      isDeleted : false
+    });
   }
 
   SaveUserChanges(user){
-    this.userservice.updateUser(user);
+       const userToDelete = this.af.database.object('/unternehmen/' + this.companyID + '/users/' + user.uid);
+    userToDelete.update({
+      role: user.role
+    });
+    const userNode = this.af.database.object('/users/' + user.uid);
+    userNode.update({
+      role: user.role
+    })
   }
 
    resetPassword(user){

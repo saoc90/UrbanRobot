@@ -49,7 +49,7 @@ createUser() {
     }
     var uid = this.userservice.uid;
 
-      this.userservice.createAdministrator(this.email, this.passwordA, 'administator')
+      this.userservice.createAdministrator(this.email, this.passwordA, 'administrator')
         .then(() => {
           this.email = '';
           this.passwordA = '';
@@ -58,15 +58,26 @@ createUser() {
         }).catch(error => this.error = error.message);
   }
 
-  deleteUser(user: any){
+  toggleUser(user: any){
     const admin = this.af.database.object('/admins/' + user.uid);
     admin.update({
-      isDeleted: true
+      isDeleted: !user.isDeleted
     });
+    const company = this.af.database.object('/unternehmen/' + this.userservice.companyId + '/users/' + user.uid);
+    company.update({
+      isDeleted: !user.isDeleted
+    })
   }
 
   resetPassword(user: any){
     this.userservice.resetPassword(user.email);
+  }
+
+  toggleCompany(company){
+    const comp = this.af.database.object('/unternehmen/' + company.id );
+    comp.update({
+      isDeactivated: !company.isDeactivated
+    })
   }
 
 }

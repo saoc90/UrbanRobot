@@ -37,7 +37,7 @@ export class UserServiceService {
 
     var user: Observable<any> = userLoginEvent.switchMap(userLoginEvent =>
       <any> this.af.database.object('/users/' + userLoginEvent.uid)
-    );
+    );    
     var companyID = user.map((userObject: any) => userObject.company);
     this.userCompanyId = companyID;
     var userObject: Observable<User> = <Observable<User>> companyID.combineLatest(user)
@@ -55,7 +55,7 @@ export class UserServiceService {
       this.email = u.email;
               console.log('Login Event');
       if (this.loginProces){
-        this.loginComponent.routeToDashboard();
+        this.loginComponent.routeToDashboard('');
         this.loginProces = false;
       }
       if (u.isDeleted) {
@@ -112,9 +112,9 @@ export class UserServiceService {
       console.log(au.uid);
       user.set(
         {
-          role: 'administrator',
+          role: role,
           uid: au.uid,
-          company: '-'
+          company: this.companyId
         });
         const admin = this.af.database.object('/admins/' + au.uid);
         admin.set(
@@ -123,8 +123,15 @@ export class UserServiceService {
             email: email,
             uid: au.uid,
             isDeleted: false
-          }
-        )
+          });
+          const companyRef = this.af.database
+            .object('/unternehmen/' + this.companyId + '/users/' + au.uid);
+          companyRef.set({
+            role: role,
+            isDeleted: false,
+            uid: au.uid,
+            email: email
+          });
     });
     
   }
@@ -144,7 +151,8 @@ export class UserServiceService {
         companyNode.set({
           id: auth.uid,
           name: company,
-          users: ''
+          users: '',
+          isDeactivated: false
         });
         const userInfo = this.af.database.object('/unternehmen/' + auth.uid + '/users/' + auth.uid);
         userInfo.set({

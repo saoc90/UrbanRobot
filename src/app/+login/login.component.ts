@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
       });
 }
 
-  routeToDashboard(){
+  routeToDashboard(query: string){
       this.resetEntries();
       this.router.navigateByUrl('/dashboard');
   }
