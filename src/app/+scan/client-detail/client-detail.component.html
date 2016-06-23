@@ -6,6 +6,7 @@
       <div class="card-content blue-grey white-text">
         <p class="card-stats-title"><i class="medium material-icons">healing</i><br> Hostname</p>
         <h4 class="card-stats-number">{{ clientObj?.name }}</h4>
+        <p class="card-stats-number">SID {{ clientObj?.sid }}</p>
       </div>
     </div>
   </div>
@@ -29,6 +30,7 @@
         <p class="card-stats-number">{{ clientObj?.cpu?.manufacturer }}</p>
         <p class="card-stats-number">{{ clientObj?.cpu?.cores }} Cores</p>
         <p class="card-stats-number">{{ clientObj?.cpu?.clockspeed }} Mhz</p>
+         <p class="card-stats-number">{{ clientObj?.ram }} GB RAM</p>
       </div>
     </div>
   </div>
@@ -40,7 +42,10 @@
     <div class="card">
       <div class="card-content blue-grey white-text">
         <h5 class="card-stats-title">IF {{nic.id}}</h5>
-        <p class="card-stats-number">IP {{nic.ip}}</p>
+        <p class="card-stats-number">IPV4 {{nic.ipv4}}</p>
+        <p class="card-stats-number">{{nic.subnetV4}}</p>
+        <p class="card-stats-number">IPV6 {{nic.ipv6}}</p>
+        <p class="card-stats-number">{{nic.subnetV6}}</p>
         <p class="card-stats-number">MAC {{nic.macaddr}}</p>
         <p class="card-stats-number">GATEWAY {{nic.gateway}}</p>
         <p class="card-stats-number" *ngIf="nic.dhcp">DHCP</p>

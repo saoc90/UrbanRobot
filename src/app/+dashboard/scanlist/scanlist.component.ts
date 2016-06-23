@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
 import { UserServiceService } from './../../shared/user-service.service';
 
 
+
 @Component({
     moduleId: module.id,
     selector: 'scanList',
@@ -37,10 +38,12 @@ export class ScanListComponent implements OnInit {
     public columnState: any = [{ 'name': 'name', 'checked': true },
         { 'name': 'sid', 'checked': true },
         { 'name': 'applications', 'checked': true },
-        { 'name': 'nics', 'checked': true },
+        { 'name': 'ipv4', 'checked': true },
+        { 'name': 'sid', 'checked': true },
+        { 'name': 'nics', 'checked': false },
         { 'name': 'printers', 'checked': true },
         { 'name': 'os', 'checked': true },
-        { 'name': 'cpu', 'checked': true },
+        { 'name': 'cpu', 'checked': false },
         { 'name': 'ram', 'checked': false }
     ];
 
@@ -48,10 +51,12 @@ export class ScanListComponent implements OnInit {
         this.columnState = [{ 'name': 'name', 'checked': true },
             { 'name': 'sid', 'checked': true },
             { 'name': 'applications', 'checked': true },
-            { 'name': 'nics', 'checked': true },
+            { 'name': 'ipv4', 'checked': true },
+            { 'name': 'sid', 'checked': true },
+            { 'name': 'nics', 'checked': false },
             { 'name': 'printers', 'checked': true },
             { 'name': 'os', 'checked': true },
-            { 'name': 'cpu', 'checked': true },
+            { 'name': 'cpu', 'checked': false },
             { 'name': 'ram', 'checked': false }
         ];
     }
