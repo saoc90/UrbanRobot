@@ -32,7 +32,10 @@ export class RegisterComponent implements OnInit {
       return;
     }
     this.userservice.createANewUser(this.email, this.passwordA, this.company)
-      .then(e => this.router.navigateByUrl("/dashboard") , error => this.error = error.text || error);
+      .then(e => {
+        this.router.navigateByUrl("/login"); 
+        this.userservice.logout();
+      }, error => this.error = error.text || error);
       
     
     
