@@ -1,0 +1,120 @@
+{
+    "rules": {
+        /* unternehmen, read alle Personen des Unternehmens, write alle admins des Unternehmens */
+        "unternehmen": {
+            "$company": {
+                ".read": "root.child('users').child(auth.uid).child('company').val()===$company",
+                ".write": "(root.child('users').child(auth.uid).child('company').val()===$company && root.child('users').child(auth.uid).child('role').val()==='admin') || root.child('admins').hasChild(auth.uid)",
+                ".validate": "newData.hasChildren(['id','name','users'])",
+                "$id": {
+                    "id": {
+                        ".validate": "newData.isString() && newData.val() === $id"
+                    },
+                    "name": {
+                        ".validate": "newData.isString()"
+                    },
+                    "users": {
+                        "$cmpuid": {
+                            ".validate": "newData.hasChildren(['email','isDeleted','role','uid'])",
+                            "email": {
+                                ".validate": "newData.isString()"
+                            },
+                            "isDeleted": {
+                                ".validate": "newData.isBoolean()"
+                            },
+                            "role": {
+                                ".validate": "newData.isString() && (newData.val()==='admin' || newData.val()==='inventor' || newData.val()==='visitor' || newData.val()==='administrator')"
+                            },
+                            "uid": {
+                                ".validate": "newData.isString()"
+                            },
+                            "$other": {
+                                ".validate": false
+                            }
+                        }
+                    } /*,  --bug beim Anlegen von neuen Benutzern
+                    "$other": {
+                        ".validate": false
+                    }*/
+                },
+                "isDeactivated": {
+                    ".validate": "newData.isBoolean()"
+                }
+            }
+        },
+        /* unternehmenObj, read alle Personen des Unternehmens, write alle admins */
+        /* unternehmenObj/lastScan,scanRequested,scandata write alle inventors */
+        "unternehmenObj": {
+            "$company": {
+                ".read": "root.child('users').child(auth.uid).child('company').val()===$company",
+                ".write": "root.child('users').child(auth.uid).child('company').val()===$company && root.child('users').child(auth.uid).child('role').val()==='admin'",
+                "lastScan": {
+                    ".write": "root.child('users').child(auth.uid).child('company').val()===$company && root.child('users').child(auth.uid).child('role').val()==='inventor'",
+                    "clientCountDiff": {
+                        ".validate": "newData.isNumber()"
+                    },
+                    "timeStamp": {
+                        ".validate": "newData.isString()"
+                    },
+                    "inventory": {
+                        ".validate": true
+                    },
+                    "hasFailed": {
+                        ".validate": "newData.isBoolean()"
+                    },
+                    "$other": {
+                        ".validate": false
+                    }
+                },
+                "scanRequested": {
+                    ".write": "root.child('users').child(auth.uid).child('company').val()===$company && root.child('users').child(auth.uid).child('role').val()==='inventor'",
+                    ".validate": "newData.isNumber() || newData.isBoolean()"
+                },
+                "scandata": {
+                    ".write": "root.child('users').child(auth.uid).child('company').val()===$company && root.child('users').child(auth.uid).child('role').val()==='inventor'"
+                },
+                "systemStatus": {
+                    ".write": "root.child('users').child(auth.uid).child('company').val()===$company && root.child('users').child(auth.uid).child('role').val()==='inventor'",
+                    "scanErrors": {
+                        ".validate": "newData.isNumber()"
+                    },
+                    "scans": {
+                        ".validate": "newData.isNumber()"
+                    },
+                    "systemLoad": {
+                        ".validate": "newData.isNumber()"
+                    },
+                    "systemStatus": {
+                        ".validate": "newData.isString()"
+                    },
+                    "$other": {
+                        ".validate": false
+                    }
+                }
+            }
+        },
+        /* users */
+        "users": {
+            "$uid": {
+                ".read": "auth.uid === $uid || root.child('users').child(auth.uid).child('company').val()===root.child('users').child($uid).child('company').val()",
+                ".write": "auth.uid === $uid || (root.child('users').child(auth.uid).child('company').val()===newData.child('company').val() && root.child('users').child(auth.uid).child('role').val()==='admin')",
+                ".validate": "newData.hasChildren(['company','role','uid'])",
+                "company": {
+                    ".validate": "newData.isString()"
+                },
+                "role": {
+                    ".validate": "newData.isString() && (newData.val()==='admin' || newData.val()==='inventor' || newData.val()==='visitor' || newData.val()==='administrator')"
+                },
+                "uid": {
+                    ".validate": "newData.isString() && newData.val()===$uid"
+                },
+                "$other": {
+                    ".validate": false
+                }
+            }
+        },
+        /* admin (god) Benutzer, werden von Hand zugewiesen und haben Zugriff auf _alles_ */
+        ".read": "root.child('admins').hasChild(auth.uid)",
+        ".write": "root.child('admins').hasChild(auth.uid)"
+    }
+}
