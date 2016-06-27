@@ -24,7 +24,7 @@
       <div class="card-content blue-grey white-text">
         <p class="card-stats-title"><i class="medium material-icons">youtube_searched_for</i><br> Scans</p>
         <h4 class="card-stats-number">{{ scans }}</h4>
-        
+
       </div>
     </div>
   </div>
@@ -38,10 +38,29 @@
       </div>
     </div>
   </div>
+  <div class="col s12 m3 l3">
+    <div class="card">
+      <div class="card-content blue-grey white-text">
+        <p class="card-stats-title"><i class="medium material-icons">settings_system_daydream</i> <br> Different operating systems</p>
+        <h4 class="card-stats-number">2</h4>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="row">
-  <app-unit-history-chart [data]="options" [title]="historyTitle"> </app-unit-history-chart>
+  <div class="col s12 m6 l6">
+    <div class="card">
+      <app-unit-history-chart [data]="options" [title]="historyTitle"> </app-unit-history-chart>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col s12 m6 l6">
+    <div class="card">
+      <app-unit-history-chart [data]="optionsChanges" [title]="Changes"> </app-unit-history-chart>
+    </div>
+  </div>
 </div>
 
 <h1>Registered Devices</h1>

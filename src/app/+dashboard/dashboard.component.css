@@ -15,3 +15,8 @@ ul {
 scanList{
   margin-top: 24px;
 }
+
+
+app-unit-history-chart{
+  max-width: 300px;
+}

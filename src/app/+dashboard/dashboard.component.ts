@@ -34,8 +34,10 @@ export class DashboardComponent implements OnActivate, OnInit {
   status: Observable<SystemStatus>;
   userRole: string = '';
   unitCountOverTime: Observable<any>;
+  unitChangesOverTime: Observable<any>;
   historyTitle: string;
   options: Object;
+  optionsChanges: Object;
   errorPercentage: string = "100";
 
   constructor(private af: AngularFire,
@@ -46,13 +48,51 @@ export class DashboardComponent implements OnActivate, OnInit {
     this.unitCountOverTime = this.provider.userCompanyId.switchMap(id =>
       this.scanService.getAllScans(id).map(
         scan => scan.map(
-          event => [+event.$key * 1000, event.inventory.clients.client.length])
+          event => {
+            if (!event.inventory) {
+              return [+event.$key * 1000, 0]
+            }
+            return [+event.$key * 1000,
+              event.inventory.clients.client.length
+            ]
+          })
+      ));
+
+    this.unitChangesOverTime = this.provider.userCompanyId.switchMap(id =>
+      this.scanService.getAllScans(id).map(
+        scan => scan.map(
+          event => {
+            if (!event.inventory) {
+              return [+event.$key * 1000, 0]
+            }
+            return [+event.$key * 1000,
+              event.inventory.clients.client.reduce((prev: any, curr: any) => {
+                if(curr.diffText.indexOf(";") == -1){
+                  return prev;
+                }
+                var changes = curr.diffText.split(';');
+                return prev += (changes.length - 1);
+              }, 0
+              )
+            ]
+          })
       ));
     this.unitCountOverTime.subscribe(c => {
       this.options = {
         title: { text: 'Unit history' },
         series: [{
           name: 'Units',
+          data: c
+        }]
+      };
+    });
+
+    this.unitChangesOverTime.subscribe(c => {
+      console.log(c);
+      this.optionsChanges = {
+        title: { text: 'Changes history' },
+        series: [{
+          name: 'Changes',
           data: c
         }]
       };
@@ -96,6 +136,10 @@ export class DashboardComponent implements OnActivate, OnInit {
     if (!this.provider.isLogedIn()) {
       this.router.navigateByUrl('/login');
     }
+  }
+
+  getOsInSystem() {
+    this.provider
   }
 
 }
