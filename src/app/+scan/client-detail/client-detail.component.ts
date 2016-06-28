@@ -21,6 +21,7 @@ export class ClientDetailComponent implements OnInit, OnActivate {
   clientObj: Client;
   scanId: string;
   clientId: string;
+  diff: Array<string> = ['no changes'];
 
   constructor(private scanService: ScanService, private userService: UserServiceService) {
 
@@ -36,7 +37,14 @@ export class ClientDetailComponent implements OnInit, OnActivate {
     console.log('route params: ', curr.getParam('id'));
     this.client = <Observable<Client>>this.userService.userCompanyId.switchMap(id =>
       this.client = this.scanService.getClientByIndex(id, this.scanId, this.clientId));
-    this.client.subscribe(c => this.clientObj = c);
+    this.client.subscribe(c => { 
+      this.diff = c.diffText.split(';');
+      this.clientObj = c;});
+  }
+
+
+  getChanges(){
+     return this.clientObj.diffText.split(';');
   }
 
 }

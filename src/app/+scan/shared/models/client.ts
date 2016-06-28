@@ -7,4 +7,5 @@ export interface Client {
     printers: any;
     ram: number;
     sid: string;
+    diffText?: string;
 }
